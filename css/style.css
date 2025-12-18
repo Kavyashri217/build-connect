@@ -99,7 +99,7 @@ nav.scrolled {
 /* Hero Section */
 .hero {
   margin-top: 50px;
-  background: linear-gradient(135deg, #6778c7 0%, #294159 100%);
+  background: linear-gradient(135deg, #294159 0%, #4a5c70 100%);
   color: var(--white);
   padding: 6rem 2rem;
   text-align: center;
