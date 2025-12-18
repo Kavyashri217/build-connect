@@ -317,7 +317,7 @@ nav.scrolled {
 /* Testimonials */
 .testimonials {
   padding: 5rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #294159 100%);
+  background: linear-gradient(135deg,  #294159 0%, #4a5c70 100%);
   color: var(--white);
 }
 .testimonials-grid {
