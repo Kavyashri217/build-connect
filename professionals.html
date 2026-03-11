@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildConnect - Find Professionals</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .professionals-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .search-filter-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-bar input,
+        .search-bar select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .professionals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .professional-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .professional-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .professional-header {
+            background: linear-gradient(135deg, #0066cc 0%, #004399 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .professional-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .professional-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .professional-specialization {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .professional-body {
+            padding: 1.5rem;
+        }
+
+        .professional-info {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .professional-rating {
+            color: #ffc107;
+            font-size: 1.1rem;
+        }
+
+        .professional-experience {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .professional-rate {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #0066cc;
+            margin-bottom: 1rem;
+        }
+
+        .professional-footer {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-contact {
+            flex: 1;
+            padding: 10px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-contact:hover {
+            background: #004399;
+        }
+
+        .btn-profile {
+            flex: 1;
+            padding: 10px;
+            background: #f0f0f0;
+            color: #0066cc;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-profile:hover {
+            background: #e0e0e0;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">BuildConnect</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find the Perfect Professional</h1>
+            <p>Browse our network of verified architects and civil engineers</p>
+        </div>
+    </section>
+
+    <!-- Professionals Container -->
+    <div class="professionals-container">
+        <!-- Search and Filter Section -->
+        <div class="search-filter-section">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by name or specialization..." onkeyup="filterProfessionals()">
+            </div>
+            <div class="filter-row">
+                <select id="specializationFilter" onchange="filterProfessionals()">
+                    <option value="">All Specializations</option>
+                    <option value="architect">Architect</option>
+                    <option value="civil-engineer">Civil Engineer</option>
+                    <option value="structural-engineer">Structural Engineer</option>
+                    <option value="site-engineer">Site Engineer</option>
+                </select>
+                <select id="experienceFilter" onchange="filterProfessionals()">
+                    <option value="">All Experience Levels</option>
+                    <option value="1-3">1-3 Years</option>
+                    <option value="3-5">3-5 Years</option>
+                    <option value="5+">5+ Years</option>
+                </select>
+                <select id="ratingFilter" onchange="filterProfessionals()">
+                    <option value="">All Ratings</option>
+                    <option value="4">4+ Stars</option>
+                    <option value="3.5">3.5+ Stars</option>
+                    <option value="3">3+ Stars</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Professionals Grid -->
+        <div class="professionals-grid" id="professionalsGrid">
+            <!-- Professional cards will be populated here by JavaScript -->
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults" style="display: none;">
+            No professionals found matching your criteria. Please try different filters.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 BuildConnect. All rights reserved. | Connecting professionals with opportunities</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Sample professionals data
+        const professionals = [
+            {
+                id: 1,
+                name: "Rajesh Kumar",
+                specialization: "Structural Engineer",
+                experience: "8 years",
+                experienceValue: "5+",
+                rating: 4.8,
+                reviews: 45,
+                hourlyRate: "$50/hour",
+                avatar: "👨‍💼"
+            },
+            {
+                id: 2,
+                name: "Priya Sharma",
+                specialization: "Architect",
+                experience: "6 years",
+                experienceValue: "5+",
+                rating: 4.9,
+                reviews: 52,
+                hourlyRate: "$60/hour",
+                avatar: "👩‍💼"
+            },
+            {
+                id: 3,
+                name: "Amit Singh",
+                specialization: "Civil Engineer",
+                experience: "4 years",
+                experienceValue: "3-5",
+                rating: 4.5,
+                reviews: 28,
+                hourlyRate: "$40/hour",
+                avatar: "👨‍💼"
+            },
+            {
+                id: 4,
+                name: "Anjali Desai",
+                specialization: "Site Engineer",
+                experience: "3 years",
+                experienceValue: "1-3",
+                rating: 4.3,
+                reviews: 18,
+                hourlyRate: "$35/hour",
+                avatar: "👩‍💼"
+            },
+            {
+                id: 5,
+                name: "Vikram Patel",
+                specialization: "Structural Engineer",
+                experience: "7 years",
+                experienceValue: "5+",
+                rating: 4.7,
+                reviews: 41,
+                hourlyRate: "$55/hour",
+                avatar: "👨‍💼"
+            },
+            {
+                id: 6,
+                name: "Neha Gupta",
+                specialization: "Architect",
+                experience: "5 years",
+                experienceValue: "3-5",
+                rating: 4.6,
+                reviews: 35,
+                hourlyRate: "$50/hour",
+                avatar: "👩‍💼"
+            }
+        ];
+
+        // Function to render professionals
+        function renderProfessionals(filteredData) {
+            const grid = document.getElementById('professionalsGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (filteredData.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            grid.innerHTML = filteredData.map(prof => `
+                <div class="professional-card">
+                    <div class="professional-header">
+                        <div class="professional-avatar">${prof.avatar}</div>
+                        <div class="professional-name">${prof.name}</div>
+                        <div class="professional-specialization">${prof.specialization}</div>
+                    </div>
+                    <div class="professional-body">
+                        <div class="professional-info">
+                            <span>${prof.experience} Experience</span>
+                            <span class="professional-rating">⭐ ${prof.rating} (${prof.reviews})</span>
+                        </div>
+                        <div class="professional-rate">${prof.hourlyRate}</div>
+                        <div class="professional-footer">
+                            <button class="btn-contact" onclick="contactProfessional('${prof.name}')">Contact</button>
+                            <button class="btn-profile" onclick="viewProfile(${prof.id})">View Profile</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter professionals
+        function filterProfessionals() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const specialization = document.getElementById('specializationFilter').value.toLowerCase();
+            const experience = document.getElementById('experienceFilter').value;
+            const rating = document.getElementById('ratingFilter').value;
+
+            const filtered = professionals.filter(prof => {
+                const matchesSearch = prof.name.toLowerCase().includes(searchText) || 
+                                     prof.specialization.toLowerCase().includes(searchText);
+                const matchesSpec = !specialization || prof.specialization.toLowerCase().includes(specialization);
+                const matchesExp = !experience || prof.experienceValue === experience;
+                const matchesRating = !rating || prof.rating >= parseFloat(rating);
+
+                return matchesSearch && matchesSpec && matchesExp && matchesRating;
+            });
+
+            renderProfessionals(filtered);
+        }
+
+        // Contact professional
+        function contactProfessional(name) {
+            alert(`Contact form opened for ${name}. This will be integrated with backend services.`);
+        }
+
+        // View profile
+        function viewProfile(id) {
+            alert(`View profile for professional ID: ${id}. This will open a detailed profile page.`);
+        }
+
+        // Initial render
+        renderProfessionals(professionals);
+    </script>
+</body>
+</html>
