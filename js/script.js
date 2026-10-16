@@ -46,7 +46,12 @@ const statsObserver = new IntersectionObserver((entries) => {
             const statNumbers = entry.target.querySelectorAll('.stat-number');
             statNumbers.forEach(stat => {
                 const target = stat.innerText;
-                const number = parseInt(target.replace(/\D/g, ''));
+                // Animate the leading number only, keeping any suffix such as "+" or "/5".
+                const match = target.match(/^([\d.]+)(.*)$/);
+                if (!match) return;
+                const number = parseFloat(match[1]);
+                const suffix = match[2];
+                const decimals = (match[1].split('.')[1] || '').length;
                 let current = 0;
                 const increment = number / 50;
                 const timer = setInterval(() => {
@@ -55,7 +60,7 @@ const statsObserver = new IntersectionObserver((entries) => {
                         stat.innerText = target;
                         clearInterval(timer);
                     } else {
-                        stat.innerText = Math.floor(current) + (target.includes('+') ? '+' : '');
+                        stat.innerText = current.toFixed(decimals) + suffix;
                     }
                 }, 30);
             });

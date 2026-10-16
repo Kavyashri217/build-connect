@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildConnect - Professional Profile</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">BuildConnect</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="professionals.html">Professionals</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero profile-hero">
+        <div class="hero-content" id="profileHeader">
+            <h1>Loading profile…</h1>
+        </div>
+    </section>
+
+    <main class="profile-container" id="profileMain" hidden>
+        <a href="professionals.html" class="back-link">← Back to all professionals</a>
+
+        <div class="profile-stats" id="profileStats"></div>
+
+        <div class="profile-layout">
+            <div>
+                <section class="profile-section">
+                    <h2>About</h2>
+                    <p id="profileBio"></p>
+                </section>
+
+                <section class="profile-section">
+                    <h2>Skills</h2>
+                    <div class="skill-list" id="profileSkills"></div>
+                </section>
+
+                <section class="profile-section">
+                    <h2>Past Projects</h2>
+                    <div id="profileProjects"></div>
+                </section>
+            </div>
+
+            <form class="enquiry-form profile-contact" id="contact" data-enquiry-form novalidate>
+                <h3 id="contactTitle">Contact</h3>
+                <input type="hidden" name="professionalId" id="professionalIdInput">
+                <label>
+                    Your name
+                    <input type="text" name="name" autocomplete="name" required maxlength="100">
+                    <span class="field-error" data-error-for="name"></span>
+                </label>
+                <label>
+                    Email
+                    <input type="email" name="email" autocomplete="email" required>
+                    <span class="field-error" data-error-for="email"></span>
+                </label>
+                <label>
+                    <span>Phone <span class="optional">(optional)</span></span>
+                    <input type="tel" name="phone" autocomplete="tel">
+                    <span class="field-error" data-error-for="phone"></span>
+                </label>
+                <label>
+                    Tell them about your project
+                    <textarea name="message" rows="5" required minlength="10" maxlength="2000"></textarea>
+                    <span class="field-error" data-error-for="message"></span>
+                </label>
+                <button type="submit" class="btn btn-dark">Send Enquiry</button>
+                <p class="form-status" role="status"></p>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 BuildConnect. All rights reserved.</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        async function loadProfile() {
+            const header = document.getElementById('profileHeader');
+            const id = new URLSearchParams(location.search).get('id');
+
+            let prof;
+            try {
+                prof = await apiGet(`/api/professionals/${encodeURIComponent(id ?? '')}`);
+            } catch (err) {
+                header.innerHTML = err.status === 404
+                    ? '<h1>Profile not found</h1><p>This professional may no longer be listed.</p><a href="professionals.html" class="btn btn-primary">Browse Professionals</a>'
+                    : '<h1>Could not load profile</h1><p>Please check that the BuildConnect server is running and try again.</p>';
+                return;
+            }
+
+            document.title = `${prof.name} - BuildConnect`;
+            header.innerHTML = `
+                <div class="profile-avatar">${escapeHtml(prof.avatar)}</div>
+                <h1>${escapeHtml(prof.name)}</h1>
+                <p>${escapeHtml(prof.specialization)} · 📍 ${escapeHtml(prof.location)}
+                ${prof.verified ? '<span class="verified-badge">✓ Verified</span>' : ''}</p>`;
+
+            document.getElementById('profileStats').innerHTML = [
+                [`${prof.experienceYears} yrs`, 'Experience'],
+                [`⭐ ${prof.rating.toFixed(1)}`, `${prof.reviewCount} reviews`],
+                [`$${prof.hourlyRate}`, 'per hour'],
+                [String(prof.projects.length), prof.projects.length === 1 ? 'Listed project' : 'Listed projects']
+            ].map(([value, label]) => `
+                <div class="profile-stat">
+                    <div class="profile-stat-value">${escapeHtml(value)}</div>
+                    <div class="profile-stat-label">${escapeHtml(label)}</div>
+                </div>`).join('');
+
+            document.getElementById('profileBio').textContent = prof.bio;
+            document.getElementById('profileSkills').innerHTML =
+                prof.skills.map(s => `<span class="skill-chip">${escapeHtml(s)}</span>`).join('');
+            document.getElementById('profileProjects').innerHTML = prof.projects.length
+                ? prof.projects.map(p => `
+                    <div class="project-item">
+                        <div class="project-title">${escapeHtml(p.title)} <span class="project-year">${p.year}</span></div>
+                        <p>${escapeHtml(p.description)}</p>
+                    </div>`).join('')
+                : '<p class="muted">No projects listed yet.</p>';
+
+            const firstName = prof.name.split(' ')[0];
+            document.getElementById('contactTitle').textContent = `Contact ${firstName}`;
+            document.getElementById('professionalIdInput').value = prof.id;
+            document.getElementById('contact').dataset.successMessage =
+                `Thanks! ${firstName} has received your enquiry and will get back to you soon.`;
+
+            document.getElementById('profileMain').hidden = false;
+            if (location.hash === '#contact') {
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        loadProfile();
+    </script>
+</body>
+</html>

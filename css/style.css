@@ -433,6 +433,190 @@ footer p {
   opacity: 0.8;
 } 
 
+/* Buttons (dark variant for light backgrounds) */
+.btn-dark {
+  background: var(--primary);
+  color: var(--white);
+}
+.btn-dark:hover {
+  background: var(--dark-light);
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Enquiry forms */
+.enquiry-form {
+  max-width: 800px;
+  margin: 3rem auto 0;
+  padding: 2rem;
+  background: var(--light);
+  border-radius: 15px;
+  display: grid;
+  gap: 1rem;
+  scroll-margin-top: 90px;
+}
+.enquiry-form h3 {
+  color: var(--dark);
+  font-size: 1.3rem;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.enquiry-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 500;
+  color: var(--dark);
+}
+.enquiry-form .optional {
+  font-weight: 400;
+  color: var(--gray);
+}
+.enquiry-form input,
+.enquiry-form textarea {
+  padding: 10px 14px;
+  border: 1px solid #d5dbe3;
+  border-radius: 8px;
+  font: inherit;
+  background: var(--white);
+}
+.enquiry-form input:focus,
+.enquiry-form textarea:focus {
+  outline: 2px solid var(--secondary);
+  border-color: var(--primary);
+}
+.enquiry-form button {
+  justify-self: start;
+}
+.field-error {
+  color: #c0392b;
+  font-size: 0.85rem;
+  font-weight: 400;
+  min-height: 0;
+}
+.form-status:empty {
+  display: none;
+}
+.form-status.success {
+  color: #1e7e4a;
+}
+.form-status.error {
+  color: #c0392b;
+}
+
+/* Skill chips */
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.skill-chip {
+  background: #e6eef6;
+  color: var(--primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+/* Profile page */
+.profile-hero {
+  padding: 5rem 2rem 4rem;
+}
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+.profile-hero h1 {
+  margin-bottom: 0.5rem;
+}
+.verified-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.9rem;
+}
+.profile-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.back-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+.profile-stat {
+  background: var(--light);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+}
+.profile-stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+.profile-stat-label {
+  color: var(--gray);
+  font-size: 0.9rem;
+}
+.profile-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.profile-section {
+  margin-bottom: 2rem;
+}
+.profile-section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+}
+.profile-section p,
+.project-item p,
+.muted {
+  color: var(--dark-light);
+  line-height: 1.7;
+}
+.project-item {
+  border-left: 3px solid var(--secondary);
+  padding-left: 1rem;
+  margin-bottom: 1.25rem;
+}
+.project-title {
+  font-weight: 600;
+}
+.project-year {
+  color: var(--gray);
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+.profile-contact {
+  margin: 0;
+  position: sticky;
+  top: 100px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .nav-links {
@@ -479,5 +663,14 @@ footer p {
     width: 60px;
     height: 60px;
     font-size: 1.5rem;
+  }
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+  .profile-contact {
+    position: static;
+  }
+  .enquiry-form {
+    padding: 1.5rem;
   }
 }

@@ -1,45 +1,67 @@
-# Build Connect
+# BuildConnect
 
-## Architecture Plan
-The Build Connect platform is designed with a microservices architecture that allows for scalability and flexibility. Each service handles distinct functionalities such as user authentication, job postings, and application management.
+BuildConnect helps property owners and developers find and contact verified architects and civil engineers. Visitors can browse professionals, filter by specialization, experience and rating, view detailed profiles with past projects, and send an enquiry directly to a professional or to the BuildConnect team.
 
-## Design
-The platform will utilize a responsive web design to cater to both desktop and mobile users. Key design components include:
-- User-friendly dashboards
-- Simplified navigation
-- Engaging user interface
+## Tech stack
 
-## User Guide
-### For Job Seekers:
-1. Sign up for an account.
-2. Browse available job listings.
-3. Apply for jobs with a few clicks.
+- **Frontend:** plain HTML, CSS and JavaScript (`index.html`, `professionals.html`, `profile.html`, `css/`, `js/`)
+- **Backend:** Node.js + [Express 5](https://expressjs.com/) (`backend/src/`)
+- **Database:** SQLite through [Prisma ORM](https://www.prisma.io/) (`backend/prisma/`)
 
-### For Employers:
-1. Create an employer account.
-2. Post job vacancies with detailed descriptions.
-3. Review applications and manage hiring processes.
+The Express server serves both the API and the frontend pages, so there is only one thing to run.
 
-## Installation Instructions
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Kavyashri217/build-connect.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd build-connect
-   ```
-3. Install the necessary dependencies:
-   ```bash
-   npm install
-   ```
-4. Run the application:
-   ```bash
-   npm start
-   ```
+## Getting started
 
-## Cool Features
-- **Real-time Notifications:** Get updates when new jobs are posted or when applications are submitted.
-- **Integrated Chat System:** Chat with employers directly on the platform.
-- **Resume Builder:** Easily create and format your resumes online.
-- **Job Recommendations:** Intelligent suggestions based on user profiles and preferences.
+Requires Node.js 20 or newer.
+
+```bash
+git clone https://github.com/Kavyashri217/build-connect.git
+cd build-connect
+npm install                                   # installs backend deps and generates the Prisma client
+cp backend/.env.example backend/.env          # local SQLite database settings
+npm run setup                                 # creates the database and loads sample professionals
+npm start                                     # http://localhost:3000
+```
+
+Use `npm run dev` instead of `npm start` to restart the server automatically when files change.
+
+Re-running `npm run setup` re-seeds the database, which **deletes all existing professionals and enquiries**.
+
+## API
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/api/professionals` | List professionals. Query params: `q` (search name, specialization, skills, city), `specialization` (`architect`, `civil-engineer`, `structural-engineer`, `site-engineer`), `experience` (`0-3`, `4-5`, `6+`), `minRating`, `sort` (`rating`, `experience`, `rate-asc`, `rate-desc`). |
+| `GET` | `/api/professionals/:id` | A single professional, including their past projects. |
+| `POST` | `/api/enquiries` | Send an enquiry. JSON body: `name`, `email`, `message`, optional `phone` and `professionalId`. Returns `201` or `400` with per-field `errors`. |
+
+## Project structure
+
+```
+├── index.html            Landing page with a general contact form
+├── professionals.html    Search and filter professionals
+├── profile.html          Professional profile and enquiry form
+├── css/style.css
+├── js/
+│   ├── api.js            Fetch helpers and enquiry form handling
+│   └── script.js         Navigation and animations
+└── backend/
+    ├── prisma/           Schema, migrations and seed data
+    ├── src/              Express app (app.js) and entry point (server.js)
+    └── test/             API tests (node:test)
+```
+
+## Tests
+
+```bash
+npm test
+```
+
+The tests use a separate throwaway database (`backend/prisma/test.db`), so they never touch your development data.
+
+## Roadmap
+
+- Professional sign-up and login so engineers can manage their own profiles
+- Client reviews and ratings
+- Email notifications when an enquiry arrives
+- Dashboard for professionals to view and reply to enquiries
