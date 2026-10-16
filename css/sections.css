@@ -1,0 +1,349 @@
+/* Landing page, part 2: crew picker, featured passes, stories and the start form. */
+
+/* ---- Crew: pick who you need ---- */
+
+.crew-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.crew-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 300px;
+  padding: 1.5rem;
+  text-decoration: none;
+  background: var(--white);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--bounce), box-shadow 0.3s var(--bounce);
+}
+
+/* The trade's hard-hat colour floods the card on hover */
+.crew-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 0;
+  height: 0;
+  background: var(--role-color);
+  transition: height 0.45s var(--bounce);
+}
+
+.crew-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.crew-card:hover {
+  transform: translate(-4px, -4px) rotate(-1deg);
+  box-shadow: var(--shadow-lg);
+}
+
+.crew-card:hover::after {
+  height: 100%;
+}
+
+.crew-card h3 {
+  margin-top: auto;
+  font-size: 1.9rem;
+}
+
+.crew-card p {
+  color: var(--muted);
+}
+
+.crew-card:hover p {
+  color: var(--ink);
+}
+
+.crew-count {
+  align-self: flex-start;
+  padding: 0.3rem 0.65rem;
+  font: 700 0.7rem var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+}
+
+.crew-arrow {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  transition: transform 0.3s var(--bounce);
+}
+
+.crew-card:hover .crew-arrow {
+  transform: translate(4px, -4px) rotate(10deg);
+}
+
+/* Trade icons animate on hover */
+.crew-icon {
+  width: 84px;
+  height: 84px;
+}
+
+.crew-icon path,
+.crew-icon circle {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.crew-icon .ico-fill {
+  fill: var(--yellow);
+}
+
+.ico-arc {
+  stroke: var(--orange) !important;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.9s ease;
+}
+
+.crew-card:hover .ico-arc {
+  stroke-dashoffset: 0;
+}
+
+.ico-compass {
+  transform-origin: 42px 14px;
+  transition: transform 0.8s var(--bounce);
+}
+
+.crew-card:hover .ico-compass {
+  transform: rotate(-16deg);
+}
+
+.ico-road {
+  stroke: var(--orange) !important;
+  stroke-dasharray: 8 8;
+}
+
+.crew-card:hover .ico-road {
+  animation: road-roll 0.5s linear infinite;
+}
+
+@keyframes road-roll {
+  to { stroke-dashoffset: -16; }
+}
+
+.ico-beam,
+.ico-hat {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: transform 0.5s var(--bounce);
+}
+
+.crew-card:hover .ico-beam {
+  transform: translateY(-10px) rotate(-5deg);
+}
+
+.crew-card:hover .ico-hat {
+  transform: translateY(-6px) rotate(-14deg);
+}
+
+/* ---- Featured: passes hanging from a rail ---- */
+
+.featured {
+  background: var(--yellow);
+}
+
+.featured .section-head p {
+  color: var(--ink);
+}
+
+.rail {
+  position: relative;
+}
+
+.rail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -1rem;
+  right: -1rem;
+  height: 14px;
+  background: var(--ink);
+  border-radius: 7px;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.18);
+}
+
+.featured .pass-grid {
+  padding-top: calc(44px + 14px);
+}
+
+.featured-note {
+  margin-top: 2.5rem;
+  color: var(--ink);
+}
+
+/* ---- Stories: notes taped to the site board ---- */
+
+.stories {
+  background:
+    linear-gradient(rgba(15, 20, 32, 0.06) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(90deg, rgba(15, 20, 32, 0.06) 1px, transparent 1px) 0 0 / 28px 28px,
+    var(--concrete);
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.75rem 2rem;
+}
+
+.story {
+  --tilt: -2deg;
+  position: relative;
+  padding: 2.3rem 1.6rem 1.5rem;
+  background: var(--white);
+  border: var(--border);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  transform: rotate(var(--tilt));
+  transition: transform 0.35s var(--bounce), box-shadow 0.35s var(--bounce);
+}
+
+.story:nth-child(2) {
+  --tilt: 1.5deg;
+}
+
+.story:nth-child(3) {
+  --tilt: -1deg;
+}
+
+.story:hover {
+  transform: rotate(0) translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Masking tape */
+.story::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 110px;
+  height: 28px;
+  background: rgba(255, 201, 20, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  transform: translateX(-50%) rotate(-3deg);
+}
+
+.story-dream {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px dashed #d6d0c4;
+}
+
+.story-thumb {
+  width: 76px;
+  height: 60px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.story-thumb .bld {
+  width: 100%;
+  height: 100%;
+}
+
+.story-dream span {
+  font: 700 0.7rem var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.story blockquote {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.story figcaption {
+  margin-top: 1.1rem;
+  font-family: var(--font-hand);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--orange);
+}
+
+/* ---- Start your dream: contact ---- */
+
+.start {
+  background: var(--orange);
+}
+
+.start-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.start-copy h2 {
+  margin: 0.8rem 0 1.25rem;
+  font-size: clamp(2.6rem, 6.5vw, 5rem);
+}
+
+.start-copy > p {
+  margin-bottom: 2rem;
+  font-size: 1.15rem;
+}
+
+.contact-list {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+}
+
+.contact-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--paper);
+  border: var(--border);
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.25s var(--bounce);
+}
+
+.contact-list li:hover {
+  transform: translateX(6px) rotate(-1deg);
+}
+
+.contact-list .label {
+  min-width: 64px;
+  font: 700 0.72rem var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.contact-list a {
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 3px solid var(--yellow);
+}
+
+@media (max-width: 960px) {
+  .start-grid {
+    grid-template-columns: 1fr;
+  }
+}

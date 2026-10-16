@@ -1,0 +1,636 @@
+/* Landing page, part 1: the dream (hero), caution tapes and the scroll-built journey. */
+
+/* ---- Hero: the dream ---- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--blueprint-grid), radial-gradient(ellipse at 72% 35%, var(--blueprint) 0%, var(--night) 72%);
+}
+
+.hero-inner {
+  position: relative;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter) clamp(3rem, 6vw, 4.5rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.hero h1 {
+  margin: 1rem 0 1.25rem;
+  font-size: clamp(3.1rem, 7.6vw, 6.4rem);
+}
+
+/* Words drop in one by one, like blocks lowered by a crane */
+.hero h1 .word {
+  display: inline-block;
+  animation: word-drop 0.9s var(--bounce) both;
+  animation-delay: calc(0.15s + var(--i, 0) * 0.14s);
+}
+
+@keyframes word-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-110%) rotate(-10deg);
+  }
+}
+
+.hero h1 .built {
+  display: inline-block;
+  padding: 0 0.14em;
+  color: var(--ink);
+  background: var(--yellow);
+  border-radius: 12px;
+  box-shadow: 6px 6px 0 var(--orange);
+  transform: rotate(-2deg);
+}
+
+.hero h1 .scratch {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-stretch: normal;
+  font-size: 1.12em;
+  letter-spacing: 0;
+  color: var(--yellow);
+}
+
+.scratch-line {
+  position: absolute;
+  left: -2%;
+  bottom: -0.1em;
+  width: 104%;
+  height: 0.3em;
+  overflow: visible;
+}
+
+.scratch-line path {
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-line 0.8s ease 1.1s forwards;
+}
+
+@keyframes draw-line {
+  to { stroke-dashoffset: 0; }
+}
+
+.hero-lead {
+  max-width: 540px;
+  font-size: clamp(1.05rem, 2vw, 1.22rem);
+  color: #d4ddf2;
+}
+
+.dream-picker {
+  margin-top: 1.6rem;
+  border: 0;
+}
+
+.dream-picker legend {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--yellow);
+}
+
+.dream-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.dream-options label {
+  cursor: pointer;
+}
+
+.dream-options input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dream-options span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1.05rem;
+  font-weight: 700;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  transition: transform 0.2s var(--bounce), background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.dream-options label:hover span {
+  border-color: var(--yellow);
+  transform: translateY(-3px) rotate(-3deg);
+}
+
+.dream-options input:checked + span {
+  color: var(--ink);
+  background: var(--yellow);
+  border-color: var(--yellow);
+  box-shadow: 4px 4px 0 var(--orange);
+}
+
+.dream-options input:focus-visible + span {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+/* Blueprint drawing with a "reality lens" that follows the pointer */
+.hero-stage {
+  position: relative;
+}
+
+.hero-art {
+  --lx: 50%;
+  --ly: 50%;
+  --lr: 0px;
+  position: relative;
+  aspect-ratio: 600 / 520;
+  border-radius: 28px;
+  cursor: crosshair;
+}
+
+.art-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.art-blueprint {
+  border: 2px dashed rgba(158, 220, 255, 0.35);
+}
+
+.art-built {
+  background: linear-gradient(180deg, #ffb27a 0%, #ffd9a0 45%, #fff1d6 100%);
+  border: var(--border);
+  clip-path: circle(var(--lr) at var(--lx) var(--ly));
+}
+
+.lens-ring {
+  position: absolute;
+  left: var(--lx);
+  top: var(--ly);
+  width: calc(var(--lr) * 2);
+  height: calc(var(--lr) * 2);
+  border: 3px dashed var(--yellow);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: lens-spin 14s linear infinite;
+}
+
+@keyframes lens-spin {
+  from { transform: translate(-50%, -50%) rotate(0); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.lens-tag {
+  position: absolute;
+  left: var(--lx);
+  top: calc(var(--ly) + var(--lr) + 8px);
+  padding: 0.2rem 0.55rem;
+  font: 700 0.68rem var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink);
+  background: var(--yellow);
+  border-radius: 6px;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.hero-art.is-revealed .lens-ring,
+.hero-art.is-revealed .lens-tag {
+  opacity: 0;
+}
+
+.art-note {
+  position: absolute;
+  font-family: var(--font-hand);
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--yellow);
+  pointer-events: none;
+}
+
+.art-note-1 {
+  top: 4%;
+  left: 5%;
+  transform: rotate(-6deg);
+}
+
+.sticker {
+  position: absolute;
+  display: grid;
+  place-content: center;
+  width: clamp(84px, 11vw, 112px);
+  aspect-ratio: 1;
+  text-align: center;
+  line-height: 1.05;
+  color: var(--ink);
+  background: var(--yellow);
+  border: var(--border);
+  border-radius: 50%;
+  box-shadow: 4px 4px 0 var(--orange);
+  transform: rotate(var(--r, -8deg));
+  transition: transform 0.3s var(--bounce);
+}
+
+.sticker:hover {
+  transform: rotate(0) scale(1.1);
+}
+
+.sticker strong {
+  font: 800 clamp(1.2rem, 2.2vw, 1.65rem) var(--font-display);
+}
+
+.sticker span {
+  font: 700 0.6rem var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sticker-1 {
+  bottom: -18px;
+  left: -14px;
+}
+
+.sticker-2 {
+  --r: 7deg;
+  top: -16px;
+  right: -10px;
+  background: var(--white);
+}
+
+.hero-art-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-top: 1.5rem;
+}
+
+.lens-hint {
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  color: #d4ddf2;
+}
+
+/* ---- Caution tapes ---- */
+
+.tapes {
+  position: relative;
+  height: clamp(110px, 14vw, 150px);
+  overflow: hidden;
+  background: var(--night);
+}
+
+.tape {
+  position: absolute;
+  left: -5%;
+  width: 110%;
+  display: flex;
+  overflow: hidden;
+  background: var(--yellow);
+  border-block: var(--border);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
+}
+
+.tape-1 {
+  z-index: 2;
+  top: 20%;
+  transform: rotate(-3deg);
+}
+
+.tape-2 {
+  top: 42%;
+  background: var(--orange);
+  transform: rotate(2.5deg);
+}
+
+.tape-track {
+  display: flex;
+  flex-shrink: 0;
+  animation: tape-move 32s linear infinite;
+}
+
+.tape-2 .tape-track {
+  animation-duration: 38s;
+  animation-direction: reverse;
+}
+
+.tape:hover .tape-track {
+  animation-play-state: paused;
+}
+
+.tape-track span {
+  padding: 0.55rem 1.2rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 85%;
+  font-size: clamp(1rem, 2.2vw, 1.4rem);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@keyframes tape-move {
+  to { transform: translateX(-50%); }
+}
+
+/* ---- Journey: scroll to build the dream ---- */
+
+.journey {
+  --p: 0;
+  --sky: 0;
+  position: relative;
+  height: 520vh;
+  background: var(--night);
+}
+
+.journey-sticky {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  height: calc(100svh - var(--nav-h));
+  overflow: hidden;
+  background: var(--blueprint-grid), linear-gradient(180deg, var(--night) 0%, var(--blueprint) 100%);
+}
+
+/* Sunrise fades in as the building rises */
+.journey-sticky::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #2b3f8f 0%, #f08a6a 58%, #ffd59a 100%);
+  opacity: var(--sky);
+}
+
+.journey-grid {
+  position: relative;
+  height: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(1.25rem, 3vw, 2.5rem) var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.journey-copy h2 {
+  margin: 0.6rem 0 1.25rem;
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+}
+
+.journey-steps {
+  display: grid;
+  gap: 0.35rem;
+  list-style: none;
+}
+
+.journey-step button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.8rem;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.6);
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.3s var(--bounce);
+}
+
+.journey-step button:hover {
+  color: var(--white);
+  transform: translateX(6px);
+}
+
+.step-num {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  font: 700 0.8rem var(--font-mono);
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 88%;
+  font-size: 1.25rem;
+}
+
+.step-role {
+  padding: 0.2rem 0.55rem;
+  font: 700 0.64rem var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+
+.step-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s ease;
+}
+
+.step-body > div {
+  overflow: hidden;
+}
+
+.step-body p {
+  padding: 0.35rem 0.8rem 0 4.1rem;
+  color: #e3e9f7;
+}
+
+.step-body a {
+  display: inline-block;
+  margin: 0.4rem 0 0.6rem 4.1rem;
+  font-weight: 700;
+  color: var(--yellow);
+}
+
+.journey-step.is-active button {
+  color: var(--ink);
+  background: var(--yellow);
+  border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--orange);
+}
+
+.journey-step.is-active .step-role {
+  color: var(--yellow);
+  background: var(--ink);
+}
+
+.journey-step.is-active .step-body {
+  grid-template-rows: 1fr;
+}
+
+.journey-art {
+  position: relative;
+  justify-self: center;
+  width: min(100%, calc((100svh - var(--nav-h) - 4rem) * 600 / 520));
+  aspect-ratio: 600 / 520;
+}
+
+.journey-art .art-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.site-board {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  min-width: 190px;
+  padding: 0.6rem 0.9rem 0.7rem;
+  font: 700 0.7rem/1.4 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  background: var(--ink);
+  border: 2px solid var(--yellow);
+  border-radius: 12px;
+  transform: rotate(-2deg);
+}
+
+.site-board strong {
+  display: block;
+  font: 800 1.35rem/1.15 var(--font-display);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--white);
+}
+
+.site-board-bar {
+  height: 8px;
+  margin-top: 0.45rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.site-board-bar span {
+  display: block;
+  height: 100%;
+  width: calc(var(--p) * 100%);
+  background: var(--hazard);
+}
+
+.journey-done {
+  position: absolute;
+  top: 6%;
+  left: 55%;
+  font: 700 clamp(2rem, 4vw, 3rem)/1 var(--font-hand);
+  white-space: nowrap;
+  color: var(--white);
+  text-shadow: 3px 3px 0 var(--orange);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -20px) rotate(-4deg) scale(0.6);
+  transition: opacity 0.4s, transform 0.6s var(--bounce);
+}
+
+.journey.is-done .journey-done {
+  opacity: 1;
+  transform: translate(-50%, 0) rotate(-4deg) scale(1);
+}
+
+.journey-hint {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  font: 700 0.72rem var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  opacity: calc(1 - var(--p) * 8);
+  animation: hint-bob 1.6s ease-in-out infinite;
+}
+
+@keyframes hint-bob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 6px); }
+}
+
+@media (max-width: 960px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stage {
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 860px) {
+  .journey {
+    height: 600vh;
+  }
+
+  .journey-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    gap: 1rem;
+    padding-top: 1rem;
+  }
+
+  .journey-copy {
+    order: 2;
+  }
+
+  .journey-copy h2,
+  .journey-copy .eyebrow,
+  .journey-step:not(.is-active) {
+    display: none;
+  }
+
+  .journey-art {
+    order: 1;
+    width: min(100%, calc((100svh - var(--nav-h)) * 0.52 * 600 / 520));
+  }
+
+  .journey-step button:hover {
+    transform: none;
+  }
+
+  .site-board {
+    min-width: 0;
+    font-size: 0.62rem;
+  }
+
+  .site-board strong {
+    font-size: 1.05rem;
+  }
+}

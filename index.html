@@ -3,217 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BuildConnect - Connect with Civil Engineers</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>BuildConnect - Dreams, Built From Scratch</title>
+    <meta name="description" content="Turn the home in your head into one you can walk into. Find verified architects, civil, structural and site engineers.">
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/building.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/sections.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#home" class="logo">BuildConnect</a>
+    <header class="site-nav">
+        <nav class="nav-container" aria-label="Main">
+            <a href="index.html" class="logo" aria-label="BuildConnect home">
+                <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#ffc914" stroke="#0f1420" stroke-width="3"/><path d="M9 30V19l11-9 11 9v11" fill="none" stroke="#0f1420" stroke-width="3.5" stroke-linejoin="round"/><path d="M16 30v-7h8v7z" fill="#0f1420"/></svg>
+                <span>Build<b>Connect</b></span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="professionals.html">Professionals</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="professionals.html">Find a crew</a></li>
+                <li><a href="#journey">How it's built</a></li>
+                <li><a href="#stories">Stories</a></li>
+                <li><a href="#start" class="nav-cta">Start your dream</a></li>
             </ul>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        </nav>
+        <div class="build-meter" aria-hidden="true"><div class="build-meter-fill"></div><span class="build-meter-label" id="buildMeterLabel">0% built</span></div>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>Find the Right Professional for Your Project</h1>
-            <p>Connect with qualified architects and civil engineers. Browse verified profiles, read reviews, and get started today.</p>
-            <div class="cta-buttons">
-                <a href="professionals.html" class="btn btn-primary">Explore Professionals</a>
-                <a href="#how-it-works" class="btn btn-secondary">Learn More</a>
-            </div>
-        </div>
-    </section>
+    <main>
+        <!-- Hero: the dream -->
+        <section class="hero on-dark" id="home">
+            <div class="stars" data-count="60" aria-hidden="true"></div>
+            <div class="hero-inner">
+                <div>
+                    <span class="eyebrow">Step 01 · Dream it</span>
+                    <h1 aria-label="Dreams, built from scratch.">
+                        <span class="word" style="--i:0" aria-hidden="true">Dreams,</span>
+                        <span class="word" style="--i:1" aria-hidden="true"><span class="built">built</span></span>
+                        <span class="word" style="--i:2" aria-hidden="true">from</span>
+                        <span class="word" style="--i:3" aria-hidden="true"><span class="scratch">scratch.<svg class="scratch-line" viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M3 14C40 4 80 18 120 9S180 6 197 12" pathLength="1"/></svg></span></span>
+                    </h1>
+                    <p class="hero-lead">Every home, villa and tower starts as a picture in someone's head. Find the verified architects and engineers who'll turn yours into something you can walk into.</p>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-container">
-            <div class="stat-item">
-                <div class="stat-number">1000+</div>
-                <div class="stat-label">Projects Completed</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">500+</div>
-                <div class="stat-label">Verified Professionals</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">4.8/5</div>
-                <div class="stat-label">Average Rating</div>
-            </div>
-        </div>
-    </section>
+                    <fieldset class="dream-picker">
+                        <legend>What are you dreaming of?</legend>
+                        <div class="dream-options">
+                            <label><input type="radio" name="dream" value="home" checked><span>🏡 Home</span></label>
+                            <label><input type="radio" name="dream" value="villa"><span>🌴 Villa</span></label>
+                            <label><input type="radio" name="dream" value="apartments"><span>🏢 Apartments</span></label>
+                            <label><input type="radio" name="dream" value="office"><span>🏙️ Office</span></label>
+                        </div>
+                    </fieldset>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <h2 class="section-title">Why Choose BuildConnect?</h2>
-        <p class="section-subtitle">We make it easy to find and hire the perfect professional</p>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">✓</div>
-                <h3>Verified Professionals</h3>
-                <p>All our architects and civil engineers are thoroughly vetted and verified for their qualifications and experience.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">★</div>
-                <h3>Trusted Reviews</h3>
-                <p>Read reviews from real clients and choose professionals based on their proven track record of excellence.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Instant Connect</h3>
-                <p>Connect instantly with professionals who match your project requirements and location preferences.</p>
-            </div>
-        </div>
-    </section>
+                    <div class="hero-ctas">
+                        <a href="professionals.html" class="btn">Find your crew →</a>
+                        <a href="#journey" class="btn btn-ghost">Watch it get built ↓</a>
+                    </div>
+                </div>
 
-    <!-- How It Works Section -->
-    <section class="how-it-works" id="how-it-works">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-subtitle">Three simple steps to find your perfect professional</p>
-        <div class="steps-container">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>Search & Filter</h3>
-                    <p>Search and filter through our database of qualified architects and civil engineers based on your specific needs.</p>
+                <div class="hero-stage">
+                    <div class="hero-art" id="heroArt">
+                        <div class="art-layer art-blueprint" id="heroBlueprint" aria-hidden="true"></div>
+                        <div class="art-layer art-built" id="heroBuilt" aria-hidden="true"></div>
+                        <div class="lens-ring" aria-hidden="true"></div>
+                        <span class="lens-tag" aria-hidden="true">Reality</span>
+                        <span class="art-note art-note-1" aria-hidden="true">your dream <span class="dream-name">home</span> ↘</span>
+                        <div class="sticker sticker-1"><strong class="count-up">500+</strong><span>verified pros</span></div>
+                        <div class="sticker sticker-2"><strong class="count-up">4.8★</strong><span>avg rating</span></div>
+                    </div>
+                    <div class="hero-art-bar">
+                        <p class="lens-hint" id="lensHint">Move over the blueprint to peek at reality →</p>
+                        <button type="button" class="btn btn-sm" id="buildToggle" aria-pressed="false">⚒ Build it</button>
+                    </div>
                 </div>
             </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Review Profiles</h3>
-                    <p>Check their experience, specializations, past projects, and client reviews to make an informed decision.</p>
+        </section>
+
+        <!-- Caution tapes -->
+        <div class="tapes" aria-hidden="true">
+            <div class="tape tape-1">
+                <div class="tape-track">
+                    <span>Dream in progress</span><span>✦</span><span>500+ verified pros</span><span>✦</span><span>1000+ dreams built</span><span>✦</span><span>4.8★ average rating</span><span>✦</span>
+                    <span>Dream in progress</span><span>✦</span><span>500+ verified pros</span><span>✦</span><span>1000+ dreams built</span><span>✦</span><span>4.8★ average rating</span><span>✦</span>
+                    <span>Dream in progress</span><span>✦</span><span>500+ verified pros</span><span>✦</span><span>1000+ dreams built</span><span>✦</span><span>4.8★ average rating</span><span>✦</span>
+                    <span>Dream in progress</span><span>✦</span><span>500+ verified pros</span><span>✦</span><span>1000+ dreams built</span><span>✦</span><span>4.8★ average rating</span><span>✦</span>
                 </div>
             </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>Connect & Start</h3>
-                    <p>Contact your chosen professional directly and start your project with confidence.</p>
+            <div class="tape tape-2">
+                <div class="tape-track">
+                    <span>Caution: dreams under construction</span><span>⚠</span><span>Hard hats on</span><span>⚠</span><span>Architects · Civil · Structural · Site</span><span>⚠</span>
+                    <span>Caution: dreams under construction</span><span>⚠</span><span>Hard hats on</span><span>⚠</span><span>Architects · Civil · Structural · Site</span><span>⚠</span>
+                    <span>Caution: dreams under construction</span><span>⚠</span><span>Hard hats on</span><span>⚠</span><span>Architects · Civil · Structural · Site</span><span>⚠</span>
+                    <span>Caution: dreams under construction</span><span>⚠</span><span>Hard hats on</span><span>⚠</span><span>Architects · Civil · Structural · Site</span><span>⚠</span>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <h2 class="section-title">What Our Clients Say</h2>
-        <p class="section-subtitle">Real stories from satisfied customers</p>
-        <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Found the perfect architect for my dream home through BuildConnect. The platform made it so easy to compare profiles and connect with professionals."</p>
-                <div class="testimonial-author">- Priya Sharma</div>
+        <!-- Journey: scroll to build -->
+        <section class="journey on-dark" id="journey" aria-labelledby="journeyTitle">
+            <div class="journey-sticky">
+                <div class="journey-grid">
+                    <div class="journey-copy">
+                        <span class="eyebrow">From dream to doorstep</span>
+                        <h2 id="journeyTitle">Scroll to build your <span class="dream-name text-yellow">home</span>.</h2>
+                        <ol class="journey-steps">
+                            <li class="journey-step is-active" data-title="Dream it">
+                                <button type="button"><span class="step-num">01</span><span class="step-title">Dream it</span><span class="step-role">You</span></button>
+                                <div class="step-body"><div><p>It starts as a picture in your head: the rooms, the light, the view from the balcony.</p></div></div>
+                            </li>
+                            <li class="journey-step" data-title="Design it">
+                                <button type="button"><span class="step-num">02</span><span class="step-title">Design it</span><span class="step-role">Architect</span></button>
+                                <div class="step-body"><div><p>An architect turns the picture into plans, elevations and approvals.</p><a href="professionals.html?specialization=architect">Meet architects →</a></div></div>
+                            </li>
+                            <li class="journey-step" data-title="Lay the groundwork">
+                                <button type="button"><span class="step-num">03</span><span class="step-title">Lay the groundwork</span><span class="step-role">Civil</span></button>
+                                <div class="step-body"><div><p>Civil engineers survey the site, estimate the costs and pour the foundations.</p><a href="professionals.html?specialization=civil-engineer">Meet civil engineers →</a></div></div>
+                            </li>
+                            <li class="journey-step" data-title="Raise the frame">
+                                <button type="button"><span class="step-num">04</span><span class="step-title">Raise the frame</span><span class="step-role">Structural</span></button>
+                                <div class="step-body"><div><p>Structural engineers design the columns and beams that hold it all up, floor by floor.</p><a href="professionals.html?specialization=structural-engineer">Meet structural engineers →</a></div></div>
+                            </li>
+                            <li class="journey-step" data-title="Build it">
+                                <button type="button"><span class="step-num">05</span><span class="step-title">Build it</span><span class="step-role">Site</span></button>
+                                <div class="step-body"><div><p>Site engineers run the site day to day: walls, windows, safety and the schedule.</p><a href="professionals.html?specialization=site-engineer">Meet site engineers →</a></div></div>
+                            </li>
+                            <li class="journey-step" data-title="Move in">
+                                <button type="button"><span class="step-num">06</span><span class="step-title">Move in</span><span class="step-role">You</span></button>
+                                <div class="step-body"><div><p>Lights on. The dream has an address now.</p><a href="#start">Start yours →</a></div></div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="journey-art">
+                        <div class="site-board">
+                            <span id="boardStage">Stage 01/06</span>
+                            <strong id="boardTitle">Dream it</strong>
+                            <span id="boardPct">0% built</span>
+                            <div class="site-board-bar"><span></span></div>
+                        </div>
+                        <div class="art-layer" id="journeyGhost" aria-hidden="true"></div>
+                        <div class="art-layer" id="journeyBuilt" aria-hidden="true"></div>
+                        <p class="journey-done" aria-hidden="true">Dream built! ✨</p>
+                    </div>
+                </div>
+                <p class="journey-hint" aria-hidden="true">↓ Keep scrolling to build</p>
             </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Excellent service! Connected with a structural engineer who helped with our commercial project. Professional and reliable platform."</p>
-                <div class="testimonial-author">- Rajesh Kumar</div>
+        </section>
+
+        <!-- Crew -->
+        <section class="section crew" id="crew">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="eyebrow">Pick your crew</span>
+                        <h2>Who's building it?</h2>
+                    </div>
+                    <p>Every stage needs a different expert. Pick a hard hat to meet the people ready to start.</p>
+                </div>
+                <div class="crew-grid">
+                    <a class="crew-card reveal" style="--i:0" data-role="architect" href="professionals.html?specialization=architect">
+                        <span class="crew-arrow" aria-hidden="true">↗</span>
+                        <svg class="crew-icon" viewBox="0 0 84 84" aria-hidden="true"><path class="ico-arc" d="M12 70a36 36 0 0 1 60 0" pathLength="1"/><g class="ico-compass"><path d="M42 14L24 70M42 14l18 56"/><circle class="ico-fill" cx="42" cy="14" r="7"/></g></svg>
+                        <span class="crew-count" data-count-for="Architect">View crew</span>
+                        <h3>Architects</h3>
+                        <p>Design, plans, approvals and interiors.</p>
+                    </a>
+                    <a class="crew-card reveal" style="--i:1" data-role="civil" href="professionals.html?specialization=civil-engineer">
+                        <span class="crew-arrow" aria-hidden="true">↗</span>
+                        <svg class="crew-icon" viewBox="0 0 84 84" aria-hidden="true"><path d="M30 10L14 74M54 10l16 64"/><path class="ico-road" d="M42 12v62"/></svg>
+                        <span class="crew-count" data-count-for="Civil Engineer">View crew</span>
+                        <h3>Civil Engineers</h3>
+                        <p>Surveys, estimates, roads, drainage and foundations.</p>
+                    </a>
+                    <a class="crew-card reveal" style="--i:2" data-role="structural" href="professionals.html?specialization=structural-engineer">
+                        <span class="crew-arrow" aria-hidden="true">↗</span>
+                        <svg class="crew-icon" viewBox="0 0 84 84" aria-hidden="true"><path d="M42 4v24"/><g class="ico-beam"><path class="ico-fill" d="M14 28h56v10H14zM14 54h56v10H14z"/><path d="M42 38v16"/></g></svg>
+                        <span class="crew-count" data-count-for="Structural Engineer">View crew</span>
+                        <h3>Structural Engineers</h3>
+                        <p>Frames, beams, audits and retrofits.</p>
+                    </a>
+                    <a class="crew-card reveal" style="--i:3" data-role="site" href="professionals.html?specialization=site-engineer">
+                        <span class="crew-arrow" aria-hidden="true">↗</span>
+                        <svg class="crew-icon" viewBox="0 0 84 84" aria-hidden="true"><g class="ico-hat"><path class="ico-fill" d="M16 58a26 26 0 0 1 52 0z"/><path d="M8 58h68v8H8zM42 32v26"/></g></svg>
+                        <span class="crew-count" data-count-for="Site Engineer">View crew</span>
+                        <h3>Site Engineers</h3>
+                        <p>Daily supervision, safety and materials.</p>
+                    </a>
+                </div>
             </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Great platform to find qualified civil engineers. The detailed profiles helped me make an informed decision for my construction project."</p>
-                <div class="testimonial-author">- Anita Desai</div>
+        </section>
+
+        <!-- Featured professionals -->
+        <section class="section featured" id="featured">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="eyebrow">Top rated</span>
+                        <h2>Meet the dream builders</h2>
+                    </div>
+                    <a href="professionals.html" class="btn btn-dark">See the whole crew →</a>
+                </div>
+                <div class="rail">
+                    <div class="pass-grid" id="featuredGrid">
+                        <div class="pass skeleton" aria-hidden="true"></div>
+                        <div class="pass skeleton" aria-hidden="true"></div>
+                        <div class="pass skeleton" aria-hidden="true"></div>
+                    </div>
+                </div>
+                <p class="scribble-note featured-note">psst… hover a pass, it swings ↑</p>
+            </div>
+        </section>
+
+        <!-- Stories -->
+        <section class="section stories" id="stories">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="eyebrow">Dreams delivered</span>
+                        <h2>From sketch to keys</h2>
+                    </div>
+                    <p>Projects that started as a dream and a search on BuildConnect.</p>
+                </div>
+                <div class="story-grid">
+                    <figure class="story reveal" style="--i:0">
+                        <div class="story-dream"><div class="story-thumb" data-dream-thumb="home" aria-hidden="true"></div><span>Dream: family home · Mumbai</span></div>
+                        <blockquote>Found the perfect architect for our first home. Comparing profiles side by side made the decision easy.</blockquote>
+                        <figcaption>— Meera N., homeowner</figcaption>
+                    </figure>
+                    <figure class="story reveal" style="--i:1">
+                        <div class="story-dream"><div class="story-thumb" data-dream-thumb="villa" aria-hidden="true"></div><span>Dream: weekend villa · Bengaluru</span></div>
+                        <blockquote>Connected with a structural engineer for our villa within a day. Professional, reliable and on schedule.</blockquote>
+                        <figcaption>— Arjun R., developer</figcaption>
+                    </figure>
+                    <figure class="story reveal" style="--i:2">
+                        <div class="story-dream"><div class="story-thumb" data-dream-thumb="office" aria-hidden="true"></div><span>Dream: new office · Pune</span></div>
+                        <blockquote>The detailed profiles and past projects helped me pick the right civil engineer for our new office.</blockquote>
+                        <figcaption>— Fatima K., business owner</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- Start your dream -->
+        <section class="section start" id="start">
+            <div class="container start-grid">
+                <div class="start-copy reveal">
+                    <span class="eyebrow">Start your dream</span>
+                    <h2>Got a dream? Let's break ground.</h2>
+                    <p>Not sure who you need yet? Tell us what you're dreaming of and we'll match you with the right crew.</p>
+                    <ul class="contact-list">
+                        <li><span class="label">Email</span><a href="mailto:info@buildconnect.com">info@buildconnect.com</a></li>
+                        <li><span class="label">Phone</span><a href="tel:+919876543210">+91 98765 43210</a></li>
+                        <li><span class="label">Office</span><span>Bengaluru, India</span></li>
+                    </ul>
+                </div>
+
+                <form class="enquiry-form reveal" style="--i:1" data-enquiry-form data-success-message="Your dream is on our desk! We'll get back to you within one business day." novalidate>
+                    <div class="form-meta"><span>Work order</span><span>New dream</span></div>
+                    <h3>Tell us about your dream</h3>
+                    <div class="form-row">
+                        <label>
+                            Name
+                            <input type="text" name="name" autocomplete="name" required maxlength="100">
+                            <span class="field-error" data-error-for="name"></span>
+                        </label>
+                        <label>
+                            Email
+                            <input type="email" name="email" autocomplete="email" required>
+                            <span class="field-error" data-error-for="email"></span>
+                        </label>
+                    </div>
+                    <label>
+                        <span>Phone <span class="optional">(optional)</span></span>
+                        <input type="tel" name="phone" autocomplete="tel">
+                        <span class="field-error" data-error-for="phone"></span>
+                    </label>
+                    <label>
+                        What are you dreaming of?
+                        <textarea name="message" rows="4" required minlength="10" maxlength="2000"></textarea>
+                        <span class="field-error" data-error-for="message"></span>
+                    </label>
+                    <button type="submit" class="btn btn-dark">Send to the site office →</button>
+                    <p class="form-status" role="status"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="skyline" id="skyline"></div>
+        <div class="footer-inner">
+            <div class="stars" data-count="50" aria-hidden="true"></div>
+            <p class="footer-dream">Every skyline started as <span class="hand">somebody's dream.</span></p>
+            <div class="footer-cols">
+                <div>
+                    <h4>Find a crew</h4>
+                    <ul>
+                        <li><a href="professionals.html?specialization=architect">Architects</a></li>
+                        <li><a href="professionals.html?specialization=civil-engineer">Civil Engineers</a></li>
+                        <li><a href="professionals.html?specialization=structural-engineer">Structural Engineers</a></li>
+                        <li><a href="professionals.html?specialization=site-engineer">Site Engineers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>BuildConnect</h4>
+                    <ul>
+                        <li><a href="index.html#journey">How it's built</a></li>
+                        <li><a href="index.html#stories">Stories</a></li>
+                        <li><a href="index.html#start">Start your dream</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Site office</h4>
+                    <ul>
+                        <li>Bengaluru, India</li>
+                        <li><a href="mailto:info@buildconnect.com">info@buildconnect.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 BuildConnect. All rights reserved.</span>
+                <span>Psst: hover the skyline to switch the lights on ✦</span>
             </div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-        <h2 class="section-title">About BuildConnect</h2>
-        <p class="section-subtitle">Bridging the gap between clients and construction professionals</p>
-        <div class="about-content">
-            <p>BuildConnect was founded with a simple yet powerful vision: to make it easy for property owners, developers, and individuals to find and connect with qualified architects and civil engineers. We understand that choosing the right professional for your project is crucial, and our platform is designed to make this process transparent, efficient, and reliable.</p>
-            <p>The construction and design industry often lacks transparency when it comes to finding qualified professionals. Many talented architects and civil engineers struggle to reach potential clients, while property owners find it challenging to identify the right professionals for their projects. BuildConnect bridges this gap by providing a trusted platform where quality meets opportunity.</p>
-            <div class="values-grid">
-                <div class="value-item">
-                    <h4>🎯 Quality</h4>
-                    <p>Every professional is thoroughly vetted</p>
-                </div>
-                <div class="value-item">
-                    <h4>🔍 Transparency</h4>
-                    <p>Clear profiles and honest reviews</p>
-                </div>
-                <div class="value-item">
-                    <h4>🤝 Trust</h4>
-                    <p>Building lasting relationships</p>
-                </div>
-                <div class="value-item">
-                    <h4>🚀 Innovation</h4>
-                    <p>Continuously improving our platform</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <h2 class="section-title">Get In Touch</h2>
-        <p class="section-subtitle">We're here to help you find the perfect professional</p>
-        <div class="contact-grid">
-            <div class="contact-item">
-                <div class="contact-icon">📧</div>
-                <h4>Email Us</h4>
-                <p><a href="mailto:info@buildconnect.com">info@buildconnect.com</a></p>
-            </div>
-            <div class="contact-item">
-                <div class="contact-icon">📱</div>
-                <h4>Call Us</h4>
-                <p><a href="tel:+919876543210">+91 98765 43210</a></p>
-            </div>
-            <div class="contact-item">
-                <div class="contact-icon">📍</div>
-                <h4>Visit Us</h4>
-                <p>Bengaluru, India</p>
-            </div>
-        </div>
-
-        <form class="enquiry-form" data-enquiry-form data-success-message="Thanks for reaching out! Our team will get back to you within one business day." novalidate>
-            <h3>Send us a message</h3>
-            <div class="form-row">
-                <label>
-                    Name
-                    <input type="text" name="name" autocomplete="name" required maxlength="100">
-                    <span class="field-error" data-error-for="name"></span>
-                </label>
-                <label>
-                    Email
-                    <input type="email" name="email" autocomplete="email" required>
-                    <span class="field-error" data-error-for="email"></span>
-                </label>
-            </div>
-            <label>
-                <span>Phone <span class="optional">(optional)</span></span>
-                <input type="tel" name="phone" autocomplete="tel">
-                <span class="field-error" data-error-for="phone"></span>
-            </label>
-            <label>
-                How can we help?
-                <textarea name="message" rows="4" required minlength="10" maxlength="2000"></textarea>
-                <span class="field-error" data-error-for="message"></span>
-            </label>
-            <button type="submit" class="btn btn-dark">Send Message</button>
-            <p class="form-status" role="status"></p>
-        </form>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 BuildConnect. All rights reserved. | Connecting professionals with opportunities</p>
     </footer>
 
     <script src="js/api.js"></script>
+    <script src="js/building.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/skyline.js"></script>
+    <script src="js/celebrate.js"></script>
+    <script src="js/home.js"></script>
 </body>
 </html>

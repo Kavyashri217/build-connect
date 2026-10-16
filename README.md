@@ -38,13 +38,23 @@ Re-running `npm run setup` re-seeds the database, which **deletes all existing p
 ## Project structure
 
 ```
-├── index.html            Landing page with a general contact form
-├── professionals.html    Search and filter professionals
+├── index.html            Landing page: dream picker, scroll-built journey, contact form
+├── professionals.html    Search and filter professionals ("site pass" cards)
 ├── profile.html          Professional profile and enquiry form
-├── css/style.css
+├── css/
+│   ├── base.css          Design tokens, type, buttons, nav, footer skyline
+│   ├── building.css      Blueprint / finished / under-construction drawings
+│   ├── components.css    Forms, chips, site-pass cards, directory
+│   ├── home.css          Landing hero and scroll journey
+│   ├── sections.css      Landing crew, featured, stories and start sections
+│   └── profile.css       Profile page
 ├── js/
-│   ├── api.js            Fetch helpers and enquiry form handling
-│   └── script.js         Navigation and animations
+│   ├── api.js            Fetch helpers, card markup and enquiry form handling
+│   ├── building.js       Procedural building drawings
+│   ├── home.js           Landing page interactions
+│   ├── script.js         Navigation, scroll meter, reveals, stars
+│   ├── skyline.js        Interactive footer skyline
+│   └── celebrate.js      Confetti and "approved" stamp
 └── backend/
     ├── prisma/           Schema, migrations and seed data
     ├── src/              Express app (app.js) and entry point (server.js)
