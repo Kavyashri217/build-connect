@@ -1,75 +1,113 @@
-// Mobile menu toggle
-const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.getElementById('navLinks');
+// Shared behaviour for every page: navigation, the "% built" scroll meter,
+// twinkling stars, drop-in reveals and count-up numbers.
 
-menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    menuToggle.classList.toggle('active');
-});
+(function () {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Close menu when clicking on a link
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        menuToggle.classList.remove('active');
-    });
-});
+    // Mobile menu
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
 
-// Navbar scroll effect
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+    function setMenuOpen(open) {
+        navLinks.classList.toggle('active', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
     }
-});
 
-// Smooth scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true');
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => setMenuOpen(false));
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setMenuOpen(false);
+        });
+    }
+
+    // Page scroll progress, shown as how much of the dream is built
+    const nav = document.querySelector('.site-nav');
+    const meterLabel = document.getElementById('buildMeterLabel');
+    let meterQueued = false;
+
+    function updateMeter() {
+        meterQueued = false;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = max > 0 ? Math.min(1, window.scrollY / max) : 1;
+        nav.style.setProperty('--scroll', progress.toFixed(4));
+        meterLabel.textContent = progress > 0.995 ? 'Dream built ✓' : `${Math.round(progress * 100)}% built`;
+    }
+
+    if (nav && meterLabel) {
+        window.addEventListener('scroll', () => {
+            if (!meterQueued) {
+                meterQueued = true;
+                requestAnimationFrame(updateMeter);
+            }
+        }, { passive: true });
+        window.addEventListener('resize', updateMeter);
+        updateMeter();
+    }
+
+    // Twinkling stars in any .stars container
+    document.querySelectorAll('.stars').forEach(sky => {
+        const count = Number(sky.dataset.count) || 40;
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < count; i++) {
+            const star = document.createElement('span');
+            star.className = 'star';
+            star.style.left = `${(Math.random() * 100).toFixed(2)}%`;
+            star.style.top = `${(Math.random() * 100).toFixed(2)}%`;
+            star.style.setProperty('--d', `${(Math.random() * 4).toFixed(2)}s`);
+            star.style.setProperty('--s', `${(1 + Math.random() * 2.5).toFixed(1)}px`);
+            frag.appendChild(star);
         }
+        sky.appendChild(frag);
     });
-});
 
-// Animate stats on scroll
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const statNumbers = entry.target.querySelectorAll('.stat-number');
-            statNumbers.forEach(stat => {
-                const target = stat.innerText;
-                // Animate the leading number only, keeping any suffix such as "+" or "/5".
-                const match = target.match(/^([\d.]+)(.*)$/);
-                if (!match) return;
-                const number = parseFloat(match[1]);
-                const suffix = match[2];
-                const decimals = (match[1].split('.')[1] || '').length;
-                let current = 0;
-                const increment = number / 50;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= number) {
-                        stat.innerText = target;
-                        clearInterval(timer);
-                    } else {
-                        stat.innerText = current.toFixed(decimals) + suffix;
-                    }
-                }, 30);
+    // Reveals: elements drop into place as they scroll into view
+    const revealables = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && !reduceMotion) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-in');
+                    revealObserver.unobserve(entry.target);
+                }
             });
-            statsObserver.unobserve(entry.target);
-        }
-    });
-});
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        revealables.forEach(el => revealObserver.observe(el));
+    } else {
+        revealables.forEach(el => el.classList.add('is-in'));
+    }
 
-const statsSection = document.querySelector('.stats');
-if (statsSection) {
-    statsObserver.observe(statsSection);
-}
+    // Count-up numbers such as "500+" or "4.8★"
+    function countUp(el) {
+        const target = el.textContent;
+        const match = target.match(/^([\d.]+)(.*)$/);
+        if (!match) return;
+        const number = parseFloat(match[1]);
+        const decimals = (match[1].split('.')[1] || '').length;
+        const start = performance.now();
+        const duration = 1400;
+        (function step(now) {
+            const t = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - t, 3);
+            el.textContent = t < 1 ? (number * eased).toFixed(decimals) + match[2] : target;
+            if (t < 1) requestAnimationFrame(step);
+        })(start);
+    }
+
+    const counters = document.querySelectorAll('.count-up');
+    if ('IntersectionObserver' in window && !reduceMotion) {
+        const countObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    countUp(entry.target);
+                    countObserver.unobserve(entry.target);
+                }
+            });
+        });
+        counters.forEach(el => countObserver.observe(el));
+    }
+})();

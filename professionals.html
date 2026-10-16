@@ -1,404 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BuildConnect - Find Professionals</title>
-
-<link rel="stylesheet" href="css/style.css">
-
-<style>
-
-.professionals-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 2rem;
-}
-
-.search-filter-section {
-    background: #f8f9fa;
-    padding: 2rem;
-    border-radius: 10px;
-    margin-bottom: 2rem;
-}
-
-.search-bar {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.search-bar input,
-.search-bar select,
-.filter-row select {
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-.search-bar input {
-    flex: 1;
-    min-width: 200px;
-}
-
-/* GRID */
-
-.professionals-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-/* CARD */
-
-.professional-card {
-    background: #4a5c70;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    color: white;
-}
-
-.professional-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
-}
-
-/* HEADER */
-
-.professional-header {
-    background: linear-gradient(135deg, #3f5468 0%, #2c3e50 100%);
-    color: white;
-    padding: 1.5rem;
-    text-align: center;
-}
-
-.professional-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    margin: 0 auto 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-}
-
-.professional-name {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-}
-
-.professional-specialization {
-    font-size: 0.9rem;
-    opacity: 0.9;
-}
-
-/* BODY */
-
-.professional-body {
-    padding: 1.5rem;
-}
-
-.professional-info {
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9rem;
-    color: #e3eaf2;
-}
-
-.professional-rating {
-    color: #ffc107;
-    font-size: 1.1rem;
-}
-
-.professional-rate {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 1rem;
-}
-
-/* BUTTONS */
-
-.professional-footer {
-    display: flex;
-    gap: 1rem;
-}
-
-.btn-contact {
-    flex: 1;
-    padding: 10px;
-    background: white;
-    color: #2c3e50;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-    text-align: center;
-}
-
-.btn-contact:hover {
-    background: #e6e6e6;
-}
-
-.btn-profile {
-    flex: 1;
-    padding: 10px;
-    background: transparent;
-    color: white;
-    border: 1px solid rgba(255,255,255,0.5);
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-    text-align: center;
-}
-
-.btn-profile:hover {
-    background: rgba(255,255,255,0.15);
-}
-
-/* NO RESULTS */
-
-.no-results {
-    text-align: center;
-    padding: 3rem;
-    color: #666;
-    font-size: 1.2rem;
-}
-
-.filter-row {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.professional-location {
-    font-size: 0.85rem;
-    opacity: 0.8;
-    margin-top: 0.25rem;
-}
-
-.professional-card .skill-list {
-    margin-bottom: 1rem;
-}
-
-.professional-card .skill-chip {
-    background: rgba(255,255,255,0.12);
-    color: #e3eaf2;
-}
-
-.results-count {
-    color: var(--gray);
-    margin-top: 1rem;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Crew - BuildConnect</title>
+    <meta name="description" content="Assemble your dream crew: verified architects, civil, structural and site engineers, filtered by trade, experience and rating.">
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
 </head>
-
 <body>
+    <header class="site-nav">
+        <nav class="nav-container" aria-label="Main">
+            <a href="index.html" class="logo" aria-label="BuildConnect home">
+                <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#ffc914" stroke="#0f1420" stroke-width="3"/><path d="M9 30V19l11-9 11 9v11" fill="none" stroke="#0f1420" stroke-width="3.5" stroke-linejoin="round"/><path d="M16 30v-7h8v7z" fill="#0f1420"/></svg>
+                <span>Build<b>Connect</b></span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="professionals.html" aria-current="page">Find a crew</a></li>
+                <li><a href="index.html#journey">How it's built</a></li>
+                <li><a href="index.html#stories">Stories</a></li>
+                <li><a href="index.html#start" class="nav-cta">Start your dream</a></li>
+            </ul>
+        </nav>
+        <div class="build-meter" aria-hidden="true"><div class="build-meter-fill"></div><span class="build-meter-label" id="buildMeterLabel">0% built</span></div>
+    </header>
 
-<!-- Navigation -->
-<nav id="navbar">
-<div class="nav-container">
-<a href="index.html" class="logo">BuildConnect</a>
+    <main>
+        <section class="page-hero on-dark">
+            <div class="stars" data-count="45" aria-hidden="true"></div>
+            <div class="page-hero-inner">
+                <span class="eyebrow">The crew directory</span>
+                <h1>Assemble your <span class="text-yellow">dream crew.</span></h1>
+                <p class="lead">Every dream needs a crew. Check their site pass, compare experience and ratings, then hire the people who'll build yours.</p>
+                <div class="role-legend" aria-label="Hard hat colours by trade">
+                    <span data-role="architect">Architects</span>
+                    <span data-role="civil">Civil</span>
+                    <span data-role="structural">Structural</span>
+                    <span data-role="site">Site</span>
+                </div>
+                <p class="scribble-note">hover a pass… it swings! ↘</p>
+            </div>
+        </section>
 
-<ul class="nav-links" id="navLinks">
-<li><a href="index.html#home">Home</a></li>
-<li><a href="professionals.html">Professionals</a></li>
-<li><a href="index.html#how-it-works">How It Works</a></li>
-<li><a href="index.html#about">About</a></li>
-<li><a href="index.html#contact">Contact</a></li>
-</ul>
+        <div class="container page-body">
+            <form class="filter-panel" id="filterForm" role="search" onsubmit="return false">
+                <div class="search-field">
+                    <span class="search-icon" aria-hidden="true">⌕</span>
+                    <label class="visually-hidden" for="searchInput">Search</label>
+                    <input type="search" id="searchInput" name="q" placeholder="Search by name, skill or city…">
+                </div>
 
-<div class="menu-toggle" id="menuToggle">
-<span></span>
-<span></span>
-<span></span>
-</div>
+                <fieldset class="chip-group">
+                    <legend>Trade</legend>
+                    <label><input type="radio" name="specialization" value="" checked><span>All trades</span></label>
+                    <label><input type="radio" name="specialization" value="architect"><span data-role="architect">Architects</span></label>
+                    <label><input type="radio" name="specialization" value="civil-engineer"><span data-role="civil">Civil</span></label>
+                    <label><input type="radio" name="specialization" value="structural-engineer"><span data-role="structural">Structural</span></label>
+                    <label><input type="radio" name="specialization" value="site-engineer"><span data-role="site">Site</span></label>
+                </fieldset>
 
-</div>
-</nav>
+                <div class="filter-row">
+                    <label class="select-field">
+                        Experience
+                        <select id="experienceFilter" name="experience">
+                            <option value="">Any experience</option>
+                            <option value="0-3">Up to 3 years</option>
+                            <option value="4-5">4–5 years</option>
+                            <option value="6+">6+ years</option>
+                        </select>
+                    </label>
+                    <label class="select-field">
+                        Rating
+                        <select id="ratingFilter" name="minRating">
+                            <option value="">Any rating</option>
+                            <option value="4.5">4.5★ and up</option>
+                            <option value="4">4★ and up</option>
+                            <option value="3.5">3.5★ and up</option>
+                        </select>
+                    </label>
+                    <label class="select-field">
+                        Sort by
+                        <select id="sortSelect" name="sort">
+                            <option value="rating">Top rated</option>
+                            <option value="experience">Most experienced</option>
+                            <option value="rate-asc">Rate: low to high</option>
+                            <option value="rate-desc">Rate: high to low</option>
+                        </select>
+                    </label>
+                    <button type="button" class="btn-reset" id="resetFilters">Clear filters</button>
+                </div>
+            </form>
 
-<!-- HERO -->
+            <div class="results-bar">
+                <p class="results-count" id="resultsCount" aria-live="polite">Loading the crew…</p>
+                <p class="results-hint" id="resultsHint"></p>
+            </div>
 
-<section class="hero">
-<div class="hero-content">
-<h1>Find the Perfect Professional</h1>
-<p>Browse our network of verified architects and civil engineers</p>
-</div>
-</section>
+            <div class="pass-grid" id="professionalsGrid">
+                <div class="pass skeleton" aria-hidden="true"></div>
+                <div class="pass skeleton" aria-hidden="true"></div>
+                <div class="pass skeleton" aria-hidden="true"></div>
+            </div>
 
-<!-- PROFESSIONALS -->
+            <div class="empty-state" id="noResults" hidden>
+                <span class="empty-cone" aria-hidden="true">🚧</span>
+                <h3 id="noResultsTitle">No crew found</h3>
+                <p id="noResultsText">Nobody matches those filters yet. Try widening your search.</p>
+                <button type="button" class="btn" id="emptyReset">Clear filters</button>
+            </div>
+        </div>
+    </main>
 
-<div class="professionals-container">
+    <footer class="site-footer">
+        <div class="skyline" id="skyline"></div>
+        <div class="footer-inner">
+            <div class="stars" data-count="50" aria-hidden="true"></div>
+            <p class="footer-dream">Every skyline started as <span class="hand">somebody's dream.</span></p>
+            <div class="footer-cols">
+                <div>
+                    <h4>Find a crew</h4>
+                    <ul>
+                        <li><a href="professionals.html?specialization=architect">Architects</a></li>
+                        <li><a href="professionals.html?specialization=civil-engineer">Civil Engineers</a></li>
+                        <li><a href="professionals.html?specialization=structural-engineer">Structural Engineers</a></li>
+                        <li><a href="professionals.html?specialization=site-engineer">Site Engineers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>BuildConnect</h4>
+                    <ul>
+                        <li><a href="index.html#journey">How it's built</a></li>
+                        <li><a href="index.html#stories">Stories</a></li>
+                        <li><a href="index.html#start">Start your dream</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Site office</h4>
+                    <ul>
+                        <li>Bengaluru, India</li>
+                        <li><a href="mailto:info@buildconnect.com">info@buildconnect.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 BuildConnect. All rights reserved.</span>
+                <span>Psst: hover the skyline to switch the lights on ✦</span>
+            </div>
+        </div>
+    </footer>
 
-<div class="search-filter-section">
+    <script src="js/api.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/skyline.js"></script>
+    <script>
+        const form = document.getElementById('filterForm');
+        const grid = document.getElementById('professionalsGrid');
+        const noResults = document.getElementById('noResults');
+        const resultsCount = document.getElementById('resultsCount');
+        const resultsHint = document.getElementById('resultsHint');
+        const FILTER_KEYS = ['q', 'specialization', 'experience', 'minRating', 'sort'];
 
-<div class="search-bar">
-<input type="search" id="searchInput" aria-label="Search" placeholder="Search by name, specialization, skill or city...">
-</div>
+        // Pre-fill the filters from the URL so links like ?specialization=architect work.
+        function applyUrlParams() {
+            const params = new URLSearchParams(location.search);
+            for (const key of FILTER_KEYS) {
+                const value = params.get(key);
+                if (value === null) continue;
+                const field = form.elements[key];
+                if (field instanceof RadioNodeList) {
+                    const radio = [...field].find(r => r.value === value);
+                    if (radio) radio.checked = true;
+                } else if (field) {
+                    field.value = value;
+                }
+            }
+        }
 
-<div class="filter-row">
+        function currentParams() {
+            const params = new URLSearchParams();
+            const data = new FormData(form);
+            for (const key of FILTER_KEYS) {
+                const value = String(data.get(key) ?? '').trim();
+                if (value && !(key === 'sort' && value === 'rating')) params.set(key, value);
+            }
+            return params;
+        }
 
-<select id="specializationFilter" aria-label="Specialization">
-<option value="">All Specializations</option>
-<option value="architect">Architect</option>
-<option value="civil-engineer">Civil Engineer</option>
-<option value="structural-engineer">Structural Engineer</option>
-<option value="site-engineer">Site Engineer</option>
-</select>
+        function showEmpty(title, text, canReset) {
+            grid.innerHTML = '';
+            resultsHint.textContent = '';
+            document.getElementById('noResultsTitle').textContent = title;
+            document.getElementById('noResultsText').textContent = text;
+            document.getElementById('emptyReset').hidden = !canReset;
+            noResults.hidden = false;
+        }
 
-<select id="experienceFilter" aria-label="Experience">
-<option value="">All Experience Levels</option>
-<option value="0-3">Up to 3 Years</option>
-<option value="4-5">4-5 Years</option>
-<option value="6+">6+ Years</option>
-</select>
+        function render(pros) {
+            if (pros.length === 0) {
+                resultsCount.textContent = 'No crew on site';
+                showEmpty('No crew found', 'Nobody matches those filters yet. Try widening your search.', true);
+                return;
+            }
+            noResults.hidden = true;
+            resultsCount.textContent = `${pros.length} ${pros.length === 1 ? 'builder' : 'builders'} ready to start`;
+            resultsHint.textContent = pros.length > 1 ? 'pick your favourites ↓' : 'just one, but a good one ↓';
+            grid.innerHTML = pros.map(renderProCard).join('');
+        }
 
-<select id="ratingFilter" aria-label="Minimum rating">
-<option value="">All Ratings</option>
-<option value="4.5">4.5+ Stars</option>
-<option value="4">4+ Stars</option>
-<option value="3.5">3.5+ Stars</option>
-</select>
+        let requestId = 0;
 
-<select id="sortSelect" aria-label="Sort by">
-<option value="rating">Sort: Top Rated</option>
-<option value="experience">Sort: Most Experienced</option>
-<option value="rate-asc">Sort: Rate (Low to High)</option>
-<option value="rate-desc">Sort: Rate (High to Low)</option>
-</select>
+        async function filterProfessionals() {
+            const params = currentParams();
+            history.replaceState(null, '', params.size ? `?${params}` : location.pathname);
 
-</div>
+            // Ignore responses that arrive after a newer request was sent.
+            const current = ++requestId;
+            try {
+                const pros = await apiGet(`/api/professionals?${params}`);
+                if (current === requestId) render(pros);
+            } catch {
+                if (current !== requestId) return;
+                resultsCount.textContent = 'Site office unreachable';
+                showEmpty('Could not load the crew', 'Please check that the BuildConnect server is running and try again.', false);
+            }
+        }
 
-<p class="results-count" id="resultsCount" aria-live="polite"></p>
-</div>
+        function resetFilters() {
+            form.reset();
+            filterProfessionals();
+        }
 
-<div class="professionals-grid" id="professionalsGrid"></div>
+        let searchTimer;
+        document.getElementById('searchInput').addEventListener('input', () => {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(filterProfessionals, 250);
+        });
+        form.addEventListener('change', (e) => {
+            if (e.target.id !== 'searchInput') filterProfessionals();
+        });
+        document.getElementById('resetFilters').addEventListener('click', resetFilters);
+        document.getElementById('emptyReset').addEventListener('click', resetFilters);
 
-<div class="no-results" id="noResults" hidden>
-No professionals found matching your criteria.
-</div>
-
-</div>
-
-<footer>
-<p>&copy; 2026 BuildConnect. All rights reserved.</p>
-</footer>
-
-<script src="js/api.js"></script>
-<script src="js/script.js"></script>
-<script>
-
-const grid = document.getElementById("professionalsGrid");
-const noResults = document.getElementById("noResults");
-const resultsCount = document.getElementById("resultsCount");
-
-function renderProfessionals(data){
-
-if(data.length===0){
-grid.innerHTML="";
-noResults.textContent="No professionals found matching your criteria.";
-noResults.hidden=false;
-resultsCount.textContent="";
-return;
-}
-
-noResults.hidden=true;
-resultsCount.textContent=`${data.length} professional${data.length===1?"":"s"} found`;
-
-grid.innerHTML=data.map(prof=>`
-
-<div class="professional-card">
-
-<div class="professional-header">
-<div class="professional-avatar">${escapeHtml(prof.avatar)}</div>
-<div class="professional-name">${escapeHtml(prof.name)}</div>
-<div class="professional-specialization">${escapeHtml(prof.specialization)}</div>
-<div class="professional-location">📍 ${escapeHtml(prof.location)}</div>
-</div>
-
-<div class="professional-body">
-
-<div class="professional-info">
-<span>${prof.experienceYears} years experience</span>
-<span class="professional-rating">⭐ ${prof.rating.toFixed(1)} (${prof.reviewCount})</span>
-</div>
-
-<div class="skill-list">
-${prof.skills.slice(0,3).map(s=>`<span class="skill-chip">${escapeHtml(s)}</span>`).join("")}
-</div>
-
-<div class="professional-rate">$${prof.hourlyRate}/hour</div>
-
-<div class="professional-footer">
-<a class="btn-contact" href="profile.html?id=${prof.id}#contact">Contact</a>
-<a class="btn-profile" href="profile.html?id=${prof.id}">View Profile</a>
-</div>
-
-</div>
-</div>
-
-`).join("");
-
-}
-
-let requestId=0;
-
-async function filterProfessionals(){
-
-const params=new URLSearchParams();
-const q=document.getElementById("searchInput").value.trim();
-const specialization=document.getElementById("specializationFilter").value;
-const experience=document.getElementById("experienceFilter").value;
-const minRating=document.getElementById("ratingFilter").value;
-const sort=document.getElementById("sortSelect").value;
-
-if(q) params.set("q",q);
-if(specialization) params.set("specialization",specialization);
-if(experience) params.set("experience",experience);
-if(minRating) params.set("minRating",minRating);
-params.set("sort",sort);
-
-// Ignore responses that arrive after a newer request was sent.
-const current=++requestId;
-try{
-const data=await apiGet(`/api/professionals?${params}`);
-if(current===requestId) renderProfessionals(data);
-}catch{
-if(current!==requestId) return;
-grid.innerHTML="";
-resultsCount.textContent="";
-noResults.textContent="Could not load professionals. Is the BuildConnect server running?";
-noResults.hidden=false;
-}
-
-}
-
-let searchTimer;
-document.getElementById("searchInput").addEventListener("input",()=>{
-clearTimeout(searchTimer);
-searchTimer=setTimeout(filterProfessionals,250);
-});
-["specializationFilter","experienceFilter","ratingFilter","sortSelect"].forEach(id=>{
-document.getElementById(id).addEventListener("change",filterProfessionals);
-});
-
-filterProfessionals();
-
-</script>
-
+        applyUrlParams();
+        filterProfessionals();
+    </script>
 </body>
 </html>
