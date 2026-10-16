@@ -1,0 +1,12 @@
+{
+  "name": "build-connect",
+  "private": true,
+  "description": "BuildConnect - connect clients with verified architects and civil engineers",
+  "scripts": {
+    "postinstall": "npm --prefix backend install",
+    "setup": "npm --prefix backend run db:setup",
+    "start": "npm --prefix backend start",
+    "dev": "npm --prefix backend run dev",
+    "test": "npm --prefix backend test"
+  }
+}

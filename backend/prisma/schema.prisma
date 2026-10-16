@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Professional {
+  id              Int       @id @default(autoincrement())
+  name            String
+  // One of: Architect, Civil Engineer, Structural Engineer, Site Engineer
+  specialization  String
+  experienceYears Int
+  rating          Float
+  reviewCount     Int       @default(0)
+  hourlyRate      Int
+  location        String
+  bio             String
+  // Comma-separated list (SQLite has no array type)
+  skills          String
+  avatar          String
+  verified        Boolean   @default(true)
+  projects        Project[]
+  enquiries       Enquiry[]
+  createdAt       DateTime  @default(now())
+}
+
+model Project {
+  id             Int          @id @default(autoincrement())
+  title          String
+  description    String
+  year           Int
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  professionalId Int
+}
+
+// A message from a visitor, either to a specific professional or to BuildConnect itself.
+model Enquiry {
+  id             Int           @id @default(autoincrement())
+  name           String
+  email          String
+  phone          String?
+  message        String
+  professional   Professional? @relation(fields: [professionalId], references: [id], onDelete: SetNull)
+  professionalId Int?
+  createdAt      DateTime      @default(now())
+}
