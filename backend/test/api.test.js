@@ -112,7 +112,7 @@ test('serves frontend pages but not backend files', async () => {
   assert.equal((await get('/')).status, 200);
   assert.equal((await get('/professionals.html')).status, 200);
   assert.equal((await get('/profile.html')).status, 200);
-  assert.equal((await get('/css/style.css')).status, 200);
+  assert.equal((await get('/css/base.css')).status, 200);
   assert.equal((await get('/backend/package.json')).status, 404);
   assert.equal((await get('/backend/prisma/dev.db')).status, 404);
 });
