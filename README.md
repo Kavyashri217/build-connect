@@ -1,67 +1,159 @@
 # BuildConnect
 
-BuildConnect helps property owners and developers find and contact verified architects and civil engineers. Visitors can browse professionals, filter by specialization, experience and rating, view detailed profiles with past projects, and send an enquiry directly to a professional or to the BuildConnect team.
+BuildConnect is a construction-services marketplace that connects property owners and developers with verified architects, civil engineers, structural engineers, and site engineers. Clients can browse professionals, filter by specialization and experience, compare profiles, and send enquiries directly.
+
+## Overview
+
+The project combines a lightweight static frontend with a Node.js + Express API and SQLite database powered by Prisma. The backend serves the UI pages and exposes the professional directory and enquiry endpoints.
+
+## Features
+
+- Browse and search professionals by name, specialization, location, and skills
+- Filter by trade, experience, minimum rating, and price
+- View detailed professional profiles with past projects and qualifications
+- Submit enquiry forms with validation
+- Seed sample data and reset the database locally with a single command
 
 ## Tech stack
 
-- **Frontend:** plain HTML, CSS and JavaScript (`index.html`, `professionals.html`, `profile.html`, `css/`, `js/`)
-- **Backend:** Node.js + [Express 5](https://expressjs.com/) (`backend/src/`)
-- **Database:** SQLite through [Prisma ORM](https://www.prisma.io/) (`backend/prisma/`)
+- Frontend: HTML, CSS, and JavaScript
+- Backend: Node.js + Express
+- Database: SQLite with Prisma ORM
+- Testing: Node.js built-in test runner
 
-The Express server serves both the API and the frontend pages, so there is only one thing to run.
+## Project structure
+
+```text
+.
+├── index.html                Landing page and contact form
+├── professionals.html        Directory with search and filters
+├── profile.html              Detailed professional profile page
+├── css/                     Frontend styles
+│   └── ...
+├── js/                      Frontend scripts
+│   ├── api.js               API helpers and enquiry logic
+│   ├── script.js            UI interactions and page behavior
+│   └── skyline.js           Animated skyline footer
+├── backend/
+│   ├── .env.example         Sample environment values
+│   ├── package.json         Backend scripts and dependencies
+│   ├── prisma/
+│   │   ├── schema.prisma     Database schema
+│   │   ├── migrations/      Prisma migration history
+│   │   └── seed.js          Seed data for professionals and projects
+│   └── src/
+│       ├── app.js           Express app and route definitions
+│       ├── db.js            Prisma client setup
+│       └── server.js        HTTP server bootstrap
+├── package.json             Root scripts for setup and running the app
+├── package-lock.json
+├── README.md
+└── .gitignore
+```
 
 ## Getting started
 
-Requires Node.js 20 or newer.
+Requirements:
+
+- Node.js 20 or newer
+- npm
+
+Install and start the app:
 
 ```bash
 git clone https://github.com/Kavyashri217/build-connect.git
 cd build-connect
-npm install                                   # installs backend deps and generates the Prisma client
-cp backend/.env.example backend/.env          # local SQLite database settings
-npm run setup                                 # creates the database and loads sample professionals
-npm start                                     # http://localhost:3000
+npm install
+cp backend/.env.example backend/.env
+npm run setup
+npm start
 ```
 
-Use `npm run dev` instead of `npm start` to restart the server automatically when files change.
+Then open:
 
-Re-running `npm run setup` re-seeds the database, which **deletes all existing professionals and enquiries**.
+- http://localhost:3000/
+- http://localhost:3000/professionals.html
+
+### Development mode
+
+```bash
+npm run dev
+```
+
+This runs the backend with Node's watch mode so the server restarts when files change.
+
+## Database setup
+
+The project uses Prisma with SQLite. The setup command creates or updates the database and seeds it with sample professionals:
+
+```bash
+npm run setup
+```
+
+This runs:
+
+```bash
+npm --prefix backend run db:setup
+```
+
+The database reset operation removes existing professional and enquiry data before repopulating it with seed data.
 
 ## API
 
-| Method | Path | Description |
-| --- | --- | --- |
-| `GET` | `/api/professionals` | List professionals. Query params: `q` (search name, specialization, skills, city), `specialization` (`architect`, `civil-engineer`, `structural-engineer`, `site-engineer`), `experience` (`0-3`, `4-5`, `6+`), `minRating`, `sort` (`rating`, `experience`, `rate-asc`, `rate-desc`). |
-| `GET` | `/api/professionals/:id` | A single professional, including their past projects. |
-| `POST` | `/api/enquiries` | Send an enquiry. JSON body: `name`, `email`, `message`, optional `phone` and `professionalId`. Returns `201` or `400` with per-field `errors`. |
+### GET /api/professionals
 
-## Project structure
+Returns a list of professionals. Supports query parameters:
 
+- q: text search across name, specialization, location, and skills
+- specialization: architect, civil-engineer, structural-engineer, or site-engineer
+- experience: 0-3, 4-5, or 6+
+- minRating: minimum rating threshold
+- sort: rating, experience, rate-asc, or rate-desc
+
+### GET /api/professionals/:id
+
+Returns a single professional profile, including their past projects.
+
+### POST /api/enquiries
+
+Creates an enquiry for a professional or general project request.
+
+Request body:
+
+```json
+{
+  "name": "Asha Patel",
+  "email": "asha@example.com",
+  "phone": "+91 98765 43210",
+  "message": "We need a structural engineer for a 3-storey residential project.",
+  "professionalId": 1
+}
 ```
-├── index.html            Landing page with a general contact form
-├── professionals.html    Search and filter professionals
-├── profile.html          Professional profile and enquiry form
-├── css/style.css
-├── js/
-│   ├── api.js            Fetch helpers and enquiry form handling
-│   └── script.js         Navigation and animations
-└── backend/
-    ├── prisma/           Schema, migrations and seed data
-    ├── src/              Express app (app.js) and entry point (server.js)
-    └── test/             API tests (node:test)
-```
 
-## Tests
+Validation errors are returned with a 400 status if the payload is invalid.
+
+## Scripts
+
+From the project root:
 
 ```bash
-npm test
+npm install      # installs root dependencies and backend dependencies
+npm run setup    # applies Prisma migrations and seeds the database
+npm start        # starts the backend server
+npm run dev      # starts the backend in watch mode
+npm test         # runs backend tests
 ```
 
-The tests use a separate throwaway database (`backend/prisma/test.db`), so they never touch your development data.
+## Notes
+
+- The Express server serves the static frontend files from the repository root.
+- The backend directory is not exposed publicly; only the CSS, JS, and HTML pages are served.
+- The app is designed for local development and demo use, with SQLite as the default database.
 
 ## Roadmap
 
-- Professional sign-up and login so engineers can manage their own profiles
+- Professional sign-up and login
 - Client reviews and ratings
-- Email notifications when an enquiry arrives
-- Dashboard for professionals to view and reply to enquiries
+- Email notifications for new enquiries
+- Dedicated dashboard for professionals to manage enquiries
+
