@@ -1,0 +1,260 @@
+/* Profile page: blueprint dossier header, spec sheet, built projects and work order. */
+
+.profile-hero .page-hero-inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(1.5rem, 5vw, 3.5rem);
+  align-items: center;
+  padding-bottom: clamp(5rem, 9vw, 6.5rem);
+}
+
+.profile-hero h1 {
+  margin: 0.6rem 0 0.9rem;
+}
+
+.profile-avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(120px, 16vw, 170px);
+  aspect-ratio: 5 / 6;
+  margin-top: 26px;
+  font: 800 clamp(2.8rem, 6vw, 4.2rem) var(--font-display);
+  background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.08) 0 10px, transparent 10px 20px), var(--blueprint);
+  border: 4px solid var(--white);
+  border-radius: 22px;
+  box-shadow: 8px 8px 0 var(--yellow);
+  transition: transform 0.35s var(--bounce);
+}
+
+/* Hard hat in the trade's colour */
+.profile-avatar::before {
+  content: "";
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  width: 64%;
+  height: 46px;
+  background: var(--role-color);
+  border: 4px solid var(--white);
+  border-radius: 60px 60px 8px 8px;
+  transform: translateX(-50%);
+  transition: transform 0.35s var(--bounce);
+}
+
+.profile-avatar:hover {
+  transform: rotate(-5deg) scale(1.04);
+}
+
+.profile-avatar:hover::before {
+  transform: translateX(-50%) translateY(-8px) rotate(-12deg);
+}
+
+.back-link {
+  display: block;
+  width: fit-content;
+  margin-bottom: 1.1rem;
+  font: 700 0.8rem var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cyan);
+}
+
+.back-link:hover {
+  color: var(--yellow);
+}
+
+.profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.25rem;
+  font: 700 0.85rem var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #d4ddf2;
+}
+
+.verified-badge {
+  padding: 0.25rem 0.65rem;
+  color: var(--ink);
+  background: var(--yellow);
+  border-radius: 999px;
+}
+
+/* Spec sheet overlapping the hero */
+.spec-sheet {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: clamp(-3.5rem, -6vw, -2.5rem);
+  overflow: hidden;
+  background: var(--white);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+
+.spec-item {
+  padding: 1.25rem 1.4rem;
+  border-right: 2px dashed var(--ink);
+  transition: background 0.2s ease;
+}
+
+.spec-item:last-child {
+  border-right: 0;
+}
+
+.spec-item:hover {
+  background: var(--yellow);
+}
+
+.spec-value {
+  font: 800 clamp(1.9rem, 4vw, 2.8rem)/1 var(--font-display);
+  font-stretch: 88%;
+}
+
+.spec-label {
+  font: 700 0.72rem var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 4.5rem);
+  align-items: start;
+  padding-block: clamp(3rem, 7vw, 5rem) clamp(4rem, 8vw, 6rem);
+}
+
+.profile-section + .profile-section {
+  margin-top: 3rem;
+}
+
+.profile-section h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  margin-bottom: 1rem;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+.profile-section h2 .hand {
+  font-size: 1.55rem;
+  color: var(--orange);
+}
+
+.profile-bio {
+  font-size: 1.18rem;
+  font-weight: 500;
+}
+
+/* Projects: each one is a little finished building; hover switches its lights on */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.project-card {
+  overflow: hidden;
+  background: var(--white);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.25s var(--bounce), box-shadow 0.25s var(--bounce);
+}
+
+.project-card:hover {
+  transform: translate(-3px, -3px) rotate(-1deg);
+  box-shadow: var(--shadow-lg);
+}
+
+.project-art {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 150px;
+  padding: 0.75rem 1rem 0;
+  background: linear-gradient(#cfeaff, #fdf1d9);
+  border-bottom: var(--border);
+  transition: background 0.4s ease;
+}
+
+.project-card:hover .project-art {
+  background: linear-gradient(#ffb27a, #ffe2b0);
+}
+
+.project-art .bld {
+  width: auto;
+  height: 100%;
+}
+
+.project-card:hover .b-win.lit {
+  fill: var(--yellow);
+}
+
+.project-info {
+  padding: 1rem 1.1rem 1.2rem;
+}
+
+.project-year {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  padding: 0.1rem 0.5rem;
+  font: 700 0.7rem var(--font-mono);
+  color: var(--yellow);
+  background: var(--ink);
+  border-radius: 999px;
+}
+
+.project-title {
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.project-info p,
+.muted {
+  margin-top: 0.35rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.profile-contact {
+  position: sticky;
+  top: calc(var(--nav-h) + 2.5rem);
+}
+
+@media (max-width: 960px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-contact {
+    position: static;
+  }
+
+  .spec-sheet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .spec-item:nth-child(2) {
+    border-right: 0;
+  }
+
+  .spec-item:nth-child(-n + 2) {
+    border-bottom: 2px dashed var(--ink);
+  }
+}
+
+@media (max-width: 560px) {
+  .profile-hero .page-hero-inner {
+    grid-template-columns: 1fr;
+  }
+}

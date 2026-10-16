@@ -1,0 +1,135 @@
+/* Building drawings from js/building.js.
+   .bld                 finished building (reality)
+   .bld.is-blueprint    white line drawing on blueprint blue (the dream)
+   .bld.is-staged       parts appear as the scroll progress reaches them */
+
+.bld {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---- Finished building ---- */
+/* :where() keeps this default at zero specificity so the part fills below win */
+:where(.bld) path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.b-ground { stroke-width: 4; }
+.b-foundation path { fill: #a8a296; }
+.b-scaffold path { stroke: #e39b00; stroke-width: 2.5; }
+.b-frame path { stroke: #4d5566; stroke-width: 5; }
+.b-wall { fill: #f4efe4; }
+.b-win { fill: #9fd0f0; stroke-width: 2.5; }
+.b-door { fill: var(--orange); }
+.b-rail { stroke-width: 2.5; }
+.b-roof { fill: #e0552a; }
+.b-chimney { fill: #b94523; }
+.b-tank { fill: #cfc8bb; }
+.b-tank-legs,
+.b-antenna { stroke-width: 3; }
+.b-trunk { stroke: #6b4a2b; stroke-width: 6; }
+.b-leaves { fill: var(--green); }
+.b-crane-steel { stroke: #f2b600; stroke-width: 3.5; }
+.b-crane-weight,
+.b-crane-cab { fill: var(--ink); }
+.b-cable { stroke-width: 1.5; }
+.b-load { fill: var(--orange); }
+.b-dims { display: none; }
+
+.b-beacon {
+  fill: #ff3b30;
+  animation: bld-blink 1.4s steps(1) infinite;
+}
+
+.b-hook {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: bld-swing 3s ease-in-out infinite;
+}
+
+.b-dim-text {
+  font: 600 13px var(--font-mono);
+  fill: var(--cyan);
+}
+
+/* Lights on */
+.b-win.lit { transition: fill 0.6s ease; }
+.bld.is-lit .b-win.lit,
+.bld.is-done .b-win.lit { fill: var(--yellow); }
+
+/* ---- Blueprint (the dream) ---- */
+.bld.is-blueprint path {
+  fill: none;
+  stroke: #e6f4ff;
+  stroke-width: 2;
+}
+
+.bld.is-blueprint .b-win { stroke-width: 1.5; }
+.bld.is-blueprint .b-dims { display: inline; }
+.bld.is-blueprint .b-dims path { stroke: var(--cyan); stroke-width: 1.5; }
+
+.bld.is-blueprint .b-crane,
+.bld.is-blueprint .b-scaffold,
+.bld.is-blueprint .b-beacon { display: none; }
+
+.bld.is-ghost { opacity: 0.45; }
+.bld.is-ghost .b-trees { display: none; }
+
+/* New blueprints draw themselves, line by line */
+.bld.is-drawing path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: bld-draw 0.9s ease forwards;
+  animation-delay: calc(var(--o, 0) * 22ms);
+}
+
+/* ---- Staged: built by scrolling ---- */
+.bld.is-staged [data-at] {
+  opacity: 0;
+  transform: translateY(-48px);
+  transition: opacity 0.3s ease, transform 0.55s var(--bounce);
+}
+
+.bld.is-staged .b-foundation { transform: translateY(26px); }
+
+.bld.is-staged .b-frame,
+.bld.is-staged .b-trees {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scaleY(0);
+}
+
+.bld.is-staged .b-dims { display: inline; }
+.bld.is-staged .b-dims path {
+  stroke: var(--cyan);
+  stroke-width: 1.5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.8s ease;
+}
+
+.bld.is-staged .b-dims.on path { stroke-dashoffset: 0; }
+
+.bld.is-staged [data-at].on {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes bld-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes bld-blink {
+  50% { opacity: 0.15; }
+}
+
+@keyframes bld-swing {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}

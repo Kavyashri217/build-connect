@@ -3,94 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BuildConnect - Professional Profile</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Builder Profile - BuildConnect</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/building.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">BuildConnect</a>
+    <header class="site-nav">
+        <nav class="nav-container" aria-label="Main">
+            <a href="index.html" class="logo" aria-label="BuildConnect home">
+                <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#ffc914" stroke="#0f1420" stroke-width="3"/><path d="M9 30V19l11-9 11 9v11" fill="none" stroke="#0f1420" stroke-width="3.5" stroke-linejoin="round"/><path d="M16 30v-7h8v7z" fill="#0f1420"/></svg>
+                <span>Build<b>Connect</b></span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="index.html#home">Home</a></li>
-                <li><a href="professionals.html">Professionals</a></li>
-                <li><a href="index.html#how-it-works">How It Works</a></li>
-                <li><a href="index.html#about">About</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="professionals.html">Find a crew</a></li>
+                <li><a href="index.html#journey">How it's built</a></li>
+                <li><a href="index.html#stories">Stories</a></li>
+                <li><a href="index.html#start" class="nav-cta">Start your dream</a></li>
             </ul>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
+        </nav>
+        <div class="build-meter" aria-hidden="true"><div class="build-meter-fill"></div><span class="build-meter-label" id="buildMeterLabel">0% built</span></div>
+    </header>
+
+    <main>
+        <section class="page-hero profile-hero on-dark">
+            <div class="stars" data-count="40" aria-hidden="true"></div>
+            <div class="page-hero-inner" id="profileHeader">
+                <div>
+                    <a href="professionals.html" class="back-link">← Back to the crew</a>
+                    <h1>Loading…</h1>
+                </div>
             </div>
-        </div>
-    </nav>
+        </section>
 
-    <section class="hero profile-hero">
-        <div class="hero-content" id="profileHeader">
-            <h1>Loading profile…</h1>
-        </div>
-    </section>
+        <div class="container" id="profileMain" hidden>
+            <div class="spec-sheet" id="profileStats"></div>
 
-    <main class="profile-container" id="profileMain" hidden>
-        <a href="professionals.html" class="back-link">← Back to all professionals</a>
+            <div class="profile-layout">
+                <div>
+                    <section class="profile-section reveal">
+                        <h2>About <span class="hand">the builder</span></h2>
+                        <p class="profile-bio" id="profileBio"></p>
+                    </section>
 
-        <div class="profile-stats" id="profileStats"></div>
+                    <section class="profile-section reveal">
+                        <h2>Toolbox <span class="hand">what they bring</span></h2>
+                        <div class="skill-list" id="profileSkills"></div>
+                    </section>
 
-        <div class="profile-layout">
-            <div>
-                <section class="profile-section">
-                    <h2>About</h2>
-                    <p id="profileBio"></p>
-                </section>
+                    <section class="profile-section reveal">
+                        <h2>Built by <span id="builtBy">them</span> <span class="hand">hover to switch the lights on</span></h2>
+                        <div id="profileProjects"></div>
+                    </section>
+                </div>
 
-                <section class="profile-section">
-                    <h2>Skills</h2>
-                    <div class="skill-list" id="profileSkills"></div>
-                </section>
-
-                <section class="profile-section">
-                    <h2>Past Projects</h2>
-                    <div id="profileProjects"></div>
-                </section>
+                <form class="enquiry-form profile-contact" id="contact" data-enquiry-form novalidate>
+                    <div class="form-meta"><span>Work order</span><span id="workOrderNo">#WO</span></div>
+                    <h3 id="contactTitle">Hire this builder</h3>
+                    <input type="hidden" name="professionalId" id="professionalIdInput">
+                    <label>
+                        Your name
+                        <input type="text" name="name" autocomplete="name" required maxlength="100">
+                        <span class="field-error" data-error-for="name"></span>
+                    </label>
+                    <label>
+                        Email
+                        <input type="email" name="email" autocomplete="email" required>
+                        <span class="field-error" data-error-for="email"></span>
+                    </label>
+                    <label>
+                        <span>Phone <span class="optional">(optional)</span></span>
+                        <input type="tel" name="phone" autocomplete="tel">
+                        <span class="field-error" data-error-for="phone"></span>
+                    </label>
+                    <label>
+                        Describe your dream project
+                        <textarea name="message" rows="5" required minlength="10" maxlength="2000"></textarea>
+                        <span class="field-error" data-error-for="message"></span>
+                    </label>
+                    <button type="submit" class="btn btn-block">Start my dream →</button>
+                    <p class="form-status" role="status"></p>
+                </form>
             </div>
-
-            <form class="enquiry-form profile-contact" id="contact" data-enquiry-form novalidate>
-                <h3 id="contactTitle">Contact</h3>
-                <input type="hidden" name="professionalId" id="professionalIdInput">
-                <label>
-                    Your name
-                    <input type="text" name="name" autocomplete="name" required maxlength="100">
-                    <span class="field-error" data-error-for="name"></span>
-                </label>
-                <label>
-                    Email
-                    <input type="email" name="email" autocomplete="email" required>
-                    <span class="field-error" data-error-for="email"></span>
-                </label>
-                <label>
-                    <span>Phone <span class="optional">(optional)</span></span>
-                    <input type="tel" name="phone" autocomplete="tel">
-                    <span class="field-error" data-error-for="phone"></span>
-                </label>
-                <label>
-                    Tell them about your project
-                    <textarea name="message" rows="5" required minlength="10" maxlength="2000"></textarea>
-                    <span class="field-error" data-error-for="message"></span>
-                </label>
-                <button type="submit" class="btn btn-dark">Send Enquiry</button>
-                <p class="form-status" role="status"></p>
-            </form>
         </div>
     </main>
 
-    <footer>
-        <p>&copy; 2026 BuildConnect. All rights reserved.</p>
+    <footer class="site-footer">
+        <div class="skyline" id="skyline"></div>
+        <div class="footer-inner">
+            <div class="stars" data-count="50" aria-hidden="true"></div>
+            <p class="footer-dream">Every skyline started as <span class="hand">somebody's dream.</span></p>
+            <div class="footer-cols">
+                <div>
+                    <h4>Find a crew</h4>
+                    <ul>
+                        <li><a href="professionals.html?specialization=architect">Architects</a></li>
+                        <li><a href="professionals.html?specialization=civil-engineer">Civil Engineers</a></li>
+                        <li><a href="professionals.html?specialization=structural-engineer">Structural Engineers</a></li>
+                        <li><a href="professionals.html?specialization=site-engineer">Site Engineers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>BuildConnect</h4>
+                    <ul>
+                        <li><a href="index.html#journey">How it's built</a></li>
+                        <li><a href="index.html#stories">Stories</a></li>
+                        <li><a href="index.html#start">Start your dream</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Site office</h4>
+                    <ul>
+                        <li>Bengaluru, India</li>
+                        <li><a href="mailto:info@buildconnect.com">info@buildconnect.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 BuildConnect. All rights reserved.</span>
+                <span>Psst: hover the skyline to switch the lights on ✦</span>
+            </div>
+        </div>
     </footer>
 
     <script src="js/api.js"></script>
+    <script src="js/building.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/skyline.js"></script>
+    <script src="js/celebrate.js"></script>
     <script>
+        const backLink = '<a href="professionals.html" class="back-link">← Back to the crew</a>';
+
         async function loadProfile() {
             const header = document.getElementById('profileHeader');
             const id = new URLSearchParams(location.search).get('id');
@@ -100,45 +153,60 @@
                 prof = await apiGet(`/api/professionals/${encodeURIComponent(id ?? '')}`);
             } catch (err) {
                 header.innerHTML = err.status === 404
-                    ? '<h1>Profile not found</h1><p>This professional may no longer be listed.</p><a href="professionals.html" class="btn btn-primary">Browse Professionals</a>'
-                    : '<h1>Could not load profile</h1><p>Please check that the BuildConnect server is running and try again.</p>';
+                    ? `<div>${backLink}<h1>Profile not found</h1><p class="lead">This builder may have packed up their tools.</p></div>`
+                    : `<div>${backLink}<h1>Could not load profile</h1><p class="lead">Please check that the BuildConnect server is running and try again.</p></div>`;
                 return;
             }
 
+            const firstName = prof.name.split(' ')[0];
             document.title = `${prof.name} - BuildConnect`;
             header.innerHTML = `
-                <div class="profile-avatar">${escapeHtml(prof.avatar)}</div>
-                <h1>${escapeHtml(prof.name)}</h1>
-                <p>${escapeHtml(prof.specialization)} · 📍 ${escapeHtml(prof.location)}
-                ${prof.verified ? '<span class="verified-badge">✓ Verified</span>' : ''}</p>`;
+                <div class="profile-avatar" data-role="${escapeHtml(roleKey(prof.specialization))}" aria-hidden="true">${escapeHtml(initials(prof.name))}</div>
+                <div>
+                    ${backLink}
+                    <span class="eyebrow">${escapeHtml(prof.specialization)}</span>
+                    <h1>${escapeHtml(prof.name)}</h1>
+                    <div class="profile-meta">
+                        <span>📍 ${escapeHtml(prof.location)}</span>
+                        ${prof.verified ? '<span class="verified-badge">✓ Verified</span>' : ''}
+                        <span>Site pass ${passNumber(prof.id)}</span>
+                    </div>
+                </div>`;
 
             document.getElementById('profileStats').innerHTML = [
-                [`${prof.experienceYears} yrs`, 'Experience'],
-                [`⭐ ${prof.rating.toFixed(1)}`, `${prof.reviewCount} reviews`],
-                [`$${prof.hourlyRate}`, 'per hour'],
-                [String(prof.projects.length), prof.projects.length === 1 ? 'Listed project' : 'Listed projects']
+                [`${prof.experienceYears} yrs`, 'On the job'],
+                [`${prof.rating.toFixed(1)}★`, `${prof.reviewCount} reviews`],
+                [`$${prof.hourlyRate}`, 'Per hour'],
+                [String(prof.projects.length), prof.projects.length === 1 ? 'Dream built' : 'Dreams built']
             ].map(([value, label]) => `
-                <div class="profile-stat">
-                    <div class="profile-stat-value">${escapeHtml(value)}</div>
-                    <div class="profile-stat-label">${escapeHtml(label)}</div>
+                <div class="spec-item">
+                    <div class="spec-value">${escapeHtml(value)}</div>
+                    <div class="spec-label">${escapeHtml(label)}</div>
                 </div>`).join('');
 
             document.getElementById('profileBio').textContent = prof.bio;
             document.getElementById('profileSkills').innerHTML =
                 prof.skills.map(s => `<span class="skill-chip">${escapeHtml(s)}</span>`).join('');
-            document.getElementById('profileProjects').innerHTML = prof.projects.length
-                ? prof.projects.map(p => `
-                    <div class="project-item">
-                        <div class="project-title">${escapeHtml(p.title)} <span class="project-year">${p.year}</span></div>
-                        <p>${escapeHtml(p.description)}</p>
-                    </div>`).join('')
-                : '<p class="muted">No projects listed yet.</p>';
+            document.getElementById('builtBy').textContent = firstName;
 
-            const firstName = prof.name.split(' ')[0];
-            document.getElementById('contactTitle').textContent = `Contact ${firstName}`;
+            // Each project gets its own little building, drawn from its title.
+            document.getElementById('profileProjects').innerHTML = prof.projects.length
+                ? `<div class="project-grid">${prof.projects.map(p => `
+                    <article class="project-card">
+                        <div class="project-art" aria-hidden="true">${Building.svg(Building.specFor(p.title), { dims: false, fit: true })}</div>
+                        <div class="project-info">
+                            <span class="project-year">${p.year}</span>
+                            <h3 class="project-title">${escapeHtml(p.title)}</h3>
+                            <p>${escapeHtml(p.description)}</p>
+                        </div>
+                    </article>`).join('')}</div>`
+                : `<p class="muted">No projects listed yet. Yours could be ${escapeHtml(firstName)}'s first!</p>`;
+
+            document.getElementById('contactTitle').textContent = `Hire ${firstName}`;
+            document.getElementById('workOrderNo').textContent = `#WO-${String(prof.id).padStart(4, '0')}`;
             document.getElementById('professionalIdInput').value = prof.id;
             document.getElementById('contact').dataset.successMessage =
-                `Thanks! ${firstName} has received your enquiry and will get back to you soon.`;
+                `Work order sent! ${firstName} will get back to you soon.`;
 
             document.getElementById('profileMain').hidden = false;
             if (location.hash === '#contact') {
